@@ -1,0 +1,9 @@
+package org.hatice.ikplus.repository.shiftandbreakmanagement;
+
+import org.hatice.ikplus.entity.shiftandbreakmanagement.Shift;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ShiftRepository extends JpaRepository<Shift,Long> {
+}
