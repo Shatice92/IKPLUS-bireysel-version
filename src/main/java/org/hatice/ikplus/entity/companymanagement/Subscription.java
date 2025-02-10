@@ -6,20 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_company")
-public class Company {
+@Table(name = "tbl_subscription_plan")
+public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String emailDomain;
-	private String Logo;
-	private Status status;
-	private Long createAt;
-	private Long updateAt;
+	private Name name;
+	private Double price;
+	private LocalDate startDate;
+	private LocalDate endDate;
 }
