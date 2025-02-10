@@ -13,7 +13,8 @@ public class Endpoints {
 	
 	public static final String BREAK= ROOT+"/break";
 	public static final String SHIFT=ROOT+"/shift";
-	
+	public static final String COMMENT= ROOT+"/comment";
+	public static final String NOTIFICATION=ROOT+"/notification";
 	
 	
 	

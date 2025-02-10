@@ -13,18 +13,16 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_comment")
-public class Comment {
+@Table(name = "tbl_notification")
+public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long companyId;
 	private Long userId;
 	
-	@Column(name = "comment", columnDefinition = "TEXT")
-	private String comment;
+	@Column(name = "notification", columnDefinition = "TEXT")
+	private String notification;
 	
-	private Integer rating;
 	private Timestamp createdAt;
-	private Timestamp updatedAt;
+	
 }
