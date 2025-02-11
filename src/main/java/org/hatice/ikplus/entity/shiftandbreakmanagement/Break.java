@@ -23,4 +23,5 @@ public class Break {
 	private BreakName breakName;
 	private Timestamp startTime;
 	private Timestamp endTime;
+	private String note;
 }
