@@ -1,7 +1,7 @@
-package org.hatice.ikplus.service.shiftandbreakmanagement;
+package org.hatice.ikplus.service.shiftandbreakservice;
 
 import lombok.RequiredArgsConstructor;
-import org.hatice.ikplus.repository.shiftandbreakmanagement.ShiftRepository;
+import org.hatice.ikplus.repository.shiftandbreakrepository.ShiftRepository;
 import org.springframework.stereotype.Service;
 
 @Service

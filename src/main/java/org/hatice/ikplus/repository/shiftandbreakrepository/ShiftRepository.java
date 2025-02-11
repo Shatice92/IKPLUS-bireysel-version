@@ -1,4 +1,4 @@
-package org.hatice.ikplus.repository.shiftandbreakmanagement;
+package org.hatice.ikplus.repository.shiftandbreakrepository;
 
 import org.hatice.ikplus.entity.shiftandbreakmanagement.Shift;
 import org.springframework.data.jpa.repository.JpaRepository;

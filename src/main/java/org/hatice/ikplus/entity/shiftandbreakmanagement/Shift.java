@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.ShiftType;
+import org.hatice.ikplus.enums.shiftandbreakenums.ShiftType;
 
 import java.sql.Timestamp;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -22,9 +22,12 @@ public class Shift {
 	private Long id;
 	private Long companyId;
 	private Long employeeId;
+	
+	@Enumerated(EnumType.STRING)
 	private ShiftType shiftType;
-	private Timestamp startTime;
-	private Timestamp endTime;
+	
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 
 
 	

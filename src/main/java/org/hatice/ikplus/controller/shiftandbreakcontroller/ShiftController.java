@@ -1,14 +1,14 @@
-package org.hatice.ikplus.controller.shiftandbreakmanagement;
+package org.hatice.ikplus.controller.shiftandbreakcontroller;
 
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.constant.Endpoints;
-import org.hatice.ikplus.service.shiftandbreakmanagement.BreakService;
+import org.hatice.ikplus.service.shiftandbreakservice.ShiftService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Endpoints.BREAK)
+@RequestMapping(Endpoints.SHIFT)
 @RequiredArgsConstructor
-public class BreakController {
-	private final BreakService breakService;
+public class ShiftController {
+	private final ShiftService shiftService;
 }

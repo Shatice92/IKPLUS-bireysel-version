@@ -1,9 +1,8 @@
-package org.hatice.ikplus.controller.commentandnotificationmanagement;
+package org.hatice.ikplus.controller.commentandnotificationcontroller;
 
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.constant.Endpoints;
-import org.hatice.ikplus.service.commentandnotificationmanagement.CommentService;
-import org.hatice.ikplus.service.shiftandbreakmanagement.BreakService;
+import org.hatice.ikplus.service.commentandnotificationservice.CommentService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

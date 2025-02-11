@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -20,11 +21,8 @@ public class Comment {
 	private Long id;
 	private Long companyId;
 	private Long userId;
-	
-	@Column(name = "comment", columnDefinition = "TEXT")
 	private String comment;
-	
-	private Integer rating;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
+	private Double rating;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 }

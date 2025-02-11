@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -19,10 +20,7 @@ public class Notification {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long userId;
-	
-	@Column(name = "notification", columnDefinition = "TEXT")
 	private String notification;
-	
-	private Timestamp createdAt;
+	private LocalDateTime createdAt;
 	
 }
