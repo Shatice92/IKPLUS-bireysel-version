@@ -14,15 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_comment")
-public class Comment {
+@Table(name = "tbl_notification")
+public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long companyId;
 	private Long userId;
-	private String comment;
-	private Double rating;
+	private String notification;
 	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	
 }
