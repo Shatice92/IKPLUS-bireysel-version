@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.EmployeeType;
 
-import java.security.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,17 +14,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_employee")
-public class Employee {
+@Table(name = "tbl_employee_document")
+public class EmployeeDocument {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long userId;
-	private Long companyId;
-	private String position;
+	private Long employeeId;
+	private String name;
+	private String url;
+	private LocalDateTime uploadedDate;
 	
-	private LocalDate hireDate;
-	private EmployeeType status;
-	private LocalDateTime updatedAt;
-
+	
 }

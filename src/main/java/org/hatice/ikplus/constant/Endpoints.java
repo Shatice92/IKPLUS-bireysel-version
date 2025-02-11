@@ -1,6 +1,7 @@
 package org.hatice.ikplus.constant;
 
 public class Endpoints {
+
 	
 	public static final String VERSION="/v1";
 	
@@ -16,7 +17,8 @@ public class Endpoints {
 	public static final String COMMENT= ROOT+"/comment";
 	public static final String NOTIFICATION=ROOT+"/notification";
 	
-	
-	
-	
+    public static final String USER=ROOT+"/user";
+    public static final String ROLE=ROOT+"/role";
+    public static final String USERROLE=ROOT+"/userRole";
 }
+

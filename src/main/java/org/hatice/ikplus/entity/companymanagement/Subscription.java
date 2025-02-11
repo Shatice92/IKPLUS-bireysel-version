@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.CompanyStatus;
+import org.hatice.ikplus.enums.SubscriptionName;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -14,16 +15,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_company")
-public class Company {
+@Table(name = "tbl_subscription_plan")
+public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String emailDomain;
-	private String Logo;
 	@Enumerated(EnumType.STRING)
-	private CompanyStatus status;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+	private SubscriptionName name;
+	private BigDecimal price;
+	private LocalDate startDate;
+	private LocalDate endDate;
 }
