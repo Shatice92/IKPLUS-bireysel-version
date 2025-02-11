@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_userRole")
+@Table(name = "tbl_user_role")
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userRoleId;
+    private Long id;
     private Long userId;
     private Long roleId;
 }

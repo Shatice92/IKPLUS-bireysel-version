@@ -1,5 +1,6 @@
 package org.hatice.ikplus.entity.usermanagement;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -18,21 +19,26 @@ import org.hatice.ikplus.enums.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
     private String role;
+    @Enumerated(EnumType.STRING)
     private UserGender gender;
     private String phoneNumber;
     private Date birthDate;
+    @Enumerated(EnumType.STRING)
     private UserMaritalStatus maritalStatus;
+    @Enumerated(EnumType.STRING)
     private UserBloodType bloodType;
     private String identificationNumber;
     private String nationality;
+    @Enumerated(EnumType.STRING)
     private UserEducationLevel educationLevel;
-    private Long CreateAt;
-    private Long UpdateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

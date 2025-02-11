@@ -16,7 +16,8 @@ import org.hatice.ikplus.enums.RoleName;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long id;
+    @Enumerated(EnumType.STRING)
     private RoleName name;
     private Long userId;
     private String permissions;

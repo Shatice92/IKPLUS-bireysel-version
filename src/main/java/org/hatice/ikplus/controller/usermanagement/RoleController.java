@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Endpoints.ROLE)
+@RequestMapping
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
