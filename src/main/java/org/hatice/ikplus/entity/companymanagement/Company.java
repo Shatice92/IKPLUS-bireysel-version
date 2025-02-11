@@ -22,6 +22,7 @@ public class Company {
 	private String name;
 	private String emailDomain;
 	private String Logo;
+	@Enumerated(EnumType.STRING)
 	private CompanyStatus status;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;

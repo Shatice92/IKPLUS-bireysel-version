@@ -20,6 +20,7 @@ public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Enumerated(EnumType.STRING)
 	private SubscriptionName name;
 	private BigDecimal price;
 	private LocalDate startDate;
