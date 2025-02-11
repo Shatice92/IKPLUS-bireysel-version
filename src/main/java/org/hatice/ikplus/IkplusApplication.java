@@ -9,5 +9,6 @@ public class IkplusApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IkplusApplication.class, args);
 	}
+	// DENEME 1-2 BERKAY BAŞOL
 	
 }
