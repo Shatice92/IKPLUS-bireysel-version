@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.dto.request.employeerequest.AddEmployeeRequestDto;
 import org.hatice.ikplus.dto.request.employeerequest.UpdateEmployeeRequestDto;
+import org.hatice.ikplus.dto.response.employeeresponse.EmployeeResponse;
 import org.hatice.ikplus.entity.employeemanagement.Employee;
 import org.hatice.ikplus.enums.EmployeeType;
 import org.hatice.ikplus.exception.ErrorType;
@@ -12,7 +13,9 @@ import org.hatice.ikplus.mapper.EmployeeMapper;
 import org.hatice.ikplus.repository.employeerepository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,8 +29,7 @@ public class EmployeeService {
 	
 	public Employee updateEmployee(UpdateEmployeeRequestDto dto) {
 		Employee existingEmployeeEntity = employeeRepository.findById(dto.getUserId())
-		                                                    .orElseThrow(() -> new EntityNotFoundException("Employee with id "
-				                                                                                                   + dto.getUserId() + " not found"));
+		                                                    .orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
 		
 		
 		EmployeeMapper.INSTANCE.updateEmployeeFromDto(dto, existingEmployeeEntity);
@@ -40,6 +42,7 @@ public class EmployeeService {
 		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
 		if (optionalEmployee.isEmpty()) throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
 		Employee employee = optionalEmployee.get();
+		if (employee.getStatus().equals(EmployeeType.ACTIVE)) System.out.println("This employee is already active");
 		employee.setStatus(EmployeeType.ACTIVE);
 		employeeRepository.save(employee);
 	}
@@ -48,6 +51,7 @@ public class EmployeeService {
 		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
 		if (optionalEmployee.isEmpty()) throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
 		Employee employee = optionalEmployee.get();
+		if (employee.getStatus().equals(EmployeeType.PASSIVE)) System.out.println("This employee is already passive");
 		employee.setStatus(EmployeeType.PASSIVE);
 		employeeRepository.save(employee);
 	}
@@ -58,4 +62,38 @@ public class EmployeeService {
 		employeeRepository.delete(byId.get());
 	}
 	
+	public List<EmployeeResponse> findAll() {
+		return employeeRepository.findAll().stream().map(EmployeeMapper.INSTANCE::toEmployeeResponse).toList();
+	}
+	
+	public EmployeeResponse findById(Long id) {
+		return employeeRepository.findById(id)
+		                         .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
+		                         .orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
+	}
+	
+	public List<EmployeeResponse> findByCompanyId(Long companyId) {
+		List<Employee> employees = employeeRepository.findByCompanyId(companyId);
+		
+		if (employees.isEmpty()) {
+			throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
+		}
+		
+		return employees.stream()
+		                .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
+		                .collect(Collectors.toList());
+	}
+	
+	
+	public List<EmployeeResponse> findByStatus(EmployeeType status) {
+		List<Employee> employees = employeeRepository.findByStatus(status);
+		
+		if (employees.isEmpty()) {
+			throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
+		}
+		
+		return employees.stream()
+		                .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
+		                .collect(Collectors.toList());
+	}
 }

@@ -30,6 +30,7 @@ public class Endpoints {
     public static final String ACTIVATESTATUS = "/activate-status/{id}";
     public static final String DEACTIVATESTATUS = "/deactivate-status/{id}";
     public static final String GETBYID = "/get-by-id/{id}";
+    public static final String GETBYCOMPANYID = "/get-by-companyid/{companyId}";
     public static final String GETBYUSERNAME = "/get-by-username";
     public static final String GETBYEMAIL =  "/get-by-email";
     public static final String REGISTER =  "/register";
