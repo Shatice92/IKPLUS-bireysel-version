@@ -1,6 +1,6 @@
-package org.hatice.ikplus.entity.expensemanagement;
+package org.hatice.ikplus.enums;
 
-public enum Status {
+public enum ExpensesStatus {
 	DRAFT,          // Harcama taslak olarak kaydedildi, henüz gönderilmedi.
 	SUBMITTED,      // Harcama onay için yöneticilere gönderildi.
 	UNDER_REVIEW,   // Harcama yöneticiler tarafından inceleniyor.

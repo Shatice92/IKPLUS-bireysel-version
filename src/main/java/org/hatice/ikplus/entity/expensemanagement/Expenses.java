@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hatice.ikplus.enums.ExpensesStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -19,12 +20,12 @@ public class Expenses {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long employeeId; // Hangi çalışanın giderleri?
-	private Double amount;
+	private Long employeeId;
+	private BigDecimal amount;
 	private String description;
-	private Double receipt;
-	private Status status;
-	private LocalDateTime submittedAt; // abonelik tarihi?
-	private Long approvedByUserId; // Kim tarafından onaylandı?
+	private String receipt; // Fatura URL link veya IMAGE linki olcak.
+	private ExpensesStatus status;
+	private LocalDate submittedAt; // harcamanın yapıldığı zaman.
+	private Long approvedByUserId;
 	private LocalDate updateAt;
 }

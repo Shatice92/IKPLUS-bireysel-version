@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hatice.ikplus.enums.SubscriptionName;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -18,8 +20,8 @@ public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Name name;
-	private Double price;
+	private SubscriptionName name;
+	private BigDecimal price;
 	private LocalDate startDate;
 	private LocalDate endDate;
 }

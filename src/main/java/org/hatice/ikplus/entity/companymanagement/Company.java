@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hatice.ikplus.enums.CompanyStatus;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -19,7 +22,7 @@ public class Company {
 	private String name;
 	private String emailDomain;
 	private String Logo;
-	private Status status;
-	private Long createAt;
-	private Long updateAt;
+	private CompanyStatus status;
+	private LocalDate createdAt;
+	private LocalDate updatedAt;
 }
