@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.LeaveStatus;
+import org.hatice.ikplus.enums.leaveandassetenums.LeaveStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -24,8 +25,8 @@ public class Leaves {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private Long approvedByUserId;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	@Enumerated(EnumType.STRING)
 	private LeaveStatus status;
 	

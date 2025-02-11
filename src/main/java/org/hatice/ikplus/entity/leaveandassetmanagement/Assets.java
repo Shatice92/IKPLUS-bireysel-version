@@ -6,9 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.AssetStatus;
+import org.hatice.ikplus.enums.leaveandassetenums.AssetStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -23,10 +24,10 @@ public class Assets {
 	private Long employeeId;
 	private String name;
 	private String serialNumber;
-	private LocalDate assignedDate;
+	private LocalDateTime assignedDate;
 	private String assetType;
 	@Enumerated(EnumType.STRING )
 	private AssetStatus status;
-	private LocalDate dueDate;
+	private LocalDateTime dueDate;
 
 }

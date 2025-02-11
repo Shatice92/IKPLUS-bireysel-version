@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.Type;
+import org.hatice.ikplus.enums.leaveandassetenums.TypeLeaves;
 
 @Builder
 @AllArgsConstructor
@@ -18,6 +18,6 @@ public class LeaveTypes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Enumerated(EnumType.STRING)
-	private Type leaveName;
+	private TypeLeaves leavesName;
 	
 }
