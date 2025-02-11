@@ -1,7 +1,7 @@
-package org.hatice.ikplus.service;
+package org.hatice.ikplus.service.employeeservice;
 
 import lombok.RequiredArgsConstructor;
-import org.hatice.ikplus.repository.EmployeeRepository;
+import org.hatice.ikplus.repository.employeerepository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 

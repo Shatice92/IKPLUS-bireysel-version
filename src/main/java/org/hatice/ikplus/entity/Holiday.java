@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hatice.ikplus.enums.HolidayType;
 
 import java.security.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,7 +23,7 @@ public class Holiday {
 	private Long id;
 
 	private HolidayType holidayType;
-	private Timestamp holidayDate;
+	private LocalDate holidayDate;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private String holidayName;

@@ -1,4 +1,4 @@
-package org.hatice.ikplus.entity;
+package org.hatice.ikplus.entity.employeemanagement;
 
 
 import jakarta.persistence.*;
@@ -22,7 +22,7 @@ public class EmployeeDocument {
 	private Long employeeId;
 	private String name;
 	private String url;
-	private LocalDateTime uploadDate;
+	private LocalDateTime uploadedDate;
 	
 	
 }
