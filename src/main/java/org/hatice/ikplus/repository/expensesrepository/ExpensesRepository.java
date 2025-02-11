@@ -1,4 +1,4 @@
-package org.hatice.ikplus.Repository.expensesrepository;
+package org.hatice.ikplus.repository.expensesrepository;
 
 import org.hatice.ikplus.entity.expensemanagement.Expenses;
 import org.springframework.data.jpa.repository.JpaRepository;
