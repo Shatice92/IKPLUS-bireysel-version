@@ -1,5 +1,6 @@
 package org.hatice.ikplus.mapper.usermapper;
 
+import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.mapstruct.Mapper;
@@ -15,5 +16,7 @@ public interface UserMapper {
 	
 	
 	User fromSaveUserDto(SaveUserRequestDto dto);
+	
+	User fromRegisterDto(RegisterRequestDto dto);
 	
 }

@@ -23,5 +23,9 @@ public class Endpoints {
 	public static final String SAVEUSER="/save-user";
 	public static final String GETALLUSERS="/get-all-users";
 	public static final String FINDBYID = "/findById/{id}";
+	public static final String REGISTER="/register";
+	public static final String LOGIN = "/login";
+	
+	
 	
 }
