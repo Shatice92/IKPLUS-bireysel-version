@@ -27,31 +27,39 @@ public class EmployeeService {
 		employeeRepository.save(EmployeeMapper.INSTANCE.fromAddEmployeeRequestDto(dto));
 	}
 	
-	public Employee updateEmployee(UpdateEmployeeRequestDto dto) {
-		Employee existingEmployeeEntity = employeeRepository.findById(dto.getUserId())
-		                                                    .orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
+	public EmployeeResponse updateEmployee(Long id,UpdateEmployeeRequestDto dto) {
 		
+		Employee existingEmployeeEntity = employeeRepository.findById(id)
+		                                                    .orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
 		
 		EmployeeMapper.INSTANCE.updateEmployeeFromDto(dto, existingEmployeeEntity);
 		
-		return employeeRepository.save(existingEmployeeEntity);
+		
+		Employee savedEmployee = employeeRepository.save(existingEmployeeEntity);
+		
+		return EmployeeMapper.INSTANCE.toEmployeeResponse(savedEmployee);
 	}
 	
 	
 	public void activateEmployee(Long id) {
-		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-		if (optionalEmployee.isEmpty()) throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
-		Employee employee = optionalEmployee.get();
-		if (employee.getStatus().equals(EmployeeType.ACTIVE)) System.out.println("This employee is already active");
+		Employee employee =
+				employeeRepository.findById(id).orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
+		
+		if (employee.getStatus().equals(EmployeeType.ACTIVE)) {
+			throw new IKPlusException(ErrorType.EMPLOYEE_ALREADY_ACTIVE);
+		}
+		
 		employee.setStatus(EmployeeType.ACTIVE);
 		employeeRepository.save(employee);
 	}
+	
 	
 	public void deactivateEmployee(Long id) {
 		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
 		if (optionalEmployee.isEmpty()) throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
 		Employee employee = optionalEmployee.get();
-		if (employee.getStatus().equals(EmployeeType.PASSIVE)) System.out.println("This employee is already passive");
+		if (employee.getStatus().equals(EmployeeType.PASSIVE))
+			throw new IKPlusException(ErrorType.EMPLOYEE_ALREADY_PASSIVE);
 		employee.setStatus(EmployeeType.PASSIVE);
 		employeeRepository.save(employee);
 	}
@@ -67,8 +75,7 @@ public class EmployeeService {
 	}
 	
 	public EmployeeResponse findById(Long id) {
-		return employeeRepository.findById(id)
-		                         .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
+		return employeeRepository.findById(id).map(EmployeeMapper.INSTANCE::toEmployeeResponse)
 		                         .orElseThrow(() -> new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND));
 	}
 	
@@ -79,9 +86,7 @@ public class EmployeeService {
 			throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
 		}
 		
-		return employees.stream()
-		                .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
-		                .collect(Collectors.toList());
+		return employees.stream().map(EmployeeMapper.INSTANCE::toEmployeeResponse).collect(Collectors.toList());
 	}
 	
 	
@@ -92,8 +97,6 @@ public class EmployeeService {
 			throw new IKPlusException(ErrorType.EMPLOYEE_NOT_FOUND);
 		}
 		
-		return employees.stream()
-		                .map(EmployeeMapper.INSTANCE::toEmployeeResponse)
-		                .collect(Collectors.toList());
+		return employees.stream().map(EmployeeMapper.INSTANCE::toEmployeeResponse).collect(Collectors.toList());
 	}
 }

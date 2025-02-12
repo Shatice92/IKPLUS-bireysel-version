@@ -32,15 +32,19 @@ public class EmployeeController {
 	}
 	
 	@PutMapping(UPDATE)
-	public ResponseEntity<BaseResponse<Employee>> updateEmployee(@PathVariable Long id,
-	                                                             @RequestBody UpdateEmployeeRequestDto dto) {
+	public ResponseEntity<BaseResponse<EmployeeResponse>> updateEmployee(@PathVariable Long id,
+	                                                                     @RequestBody UpdateEmployeeRequestDto dto) {
 		
-		dto.setUserId(id);
-		
-		Employee updatedEmployee = employeeService.updateEmployee(dto);
-		return ResponseEntity.ok(BaseResponse.<Employee>builder().data(updatedEmployee)
-		                                     .message("Employee updated successfully").code(200).success(true).build());
+		return ResponseEntity.ok(
+				BaseResponse.<EmployeeResponse>builder()
+				            .data(employeeService.updateEmployee(id,dto))
+				            .message("Employee updated successfully")
+				            .code(200)
+				            .success(true)
+				            .build()
+		);
 	}
+	
 	
 	
 	@PutMapping(ACTIVATESTATUS)
