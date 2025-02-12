@@ -23,6 +23,7 @@ import static org.hatice.ikplus.constant.Endpoints.*;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     
