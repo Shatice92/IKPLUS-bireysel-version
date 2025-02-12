@@ -25,8 +25,8 @@ public class Employee {
 	private Long userId;
 	private Long companyId;
 	private String position;
-	
 	private LocalDate hireDate;
+	@Enumerated(EnumType.STRING)
 	private EmployeeType status;
 	private LocalDateTime updatedAt;
 
