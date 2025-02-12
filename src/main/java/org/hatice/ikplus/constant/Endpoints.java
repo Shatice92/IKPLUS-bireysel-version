@@ -20,5 +20,8 @@ public class Endpoints {
     public static final String USER=ROOT+"/user";
     public static final String ROLE=ROOT+"/role";
     public static final String USERROLE=ROOT+"/userRole";
+	public static final String SAVEUSER="/save-user";
+	public static final String GETALLUSERS="/get-all-users";
+	public static final String FINDBYID = "/findById/{id}";
+	
 }
-
