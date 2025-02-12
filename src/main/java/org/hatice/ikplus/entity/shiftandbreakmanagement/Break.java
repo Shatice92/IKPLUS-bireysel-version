@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.shiftandbreakenums.ShiftType;
+import org.hatice.ikplus.enums.shiftandbreakenums.BreakName;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,20 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_shift")
-public class Shift {
+@Table(name = "tbl_break")
+public class Break {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long companyId;
-	private Long employeeId;
+	private Long shiftId;
 	
 	@Enumerated(EnumType.STRING)
-	private ShiftType shiftType;
+	private BreakName breakName;
 	
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
-
-
 	
 }
