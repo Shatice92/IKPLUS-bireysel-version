@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.hatice.ikplus.constant.Endpoints.*;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping(Endpoints.EMPLOYEE)
 @RequiredArgsConstructor
