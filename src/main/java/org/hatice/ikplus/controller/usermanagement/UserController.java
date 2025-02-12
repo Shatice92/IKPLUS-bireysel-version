@@ -8,6 +8,7 @@ import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.entity.usermanagement.User;
+import org.hatice.ikplus.enums.RoleName;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
 import org.hatice.ikplus.service.usermanagement.UserService;
@@ -84,4 +85,17 @@ public class UserController {
                                              .success(true)
                                              .build());
     }
+    
+    @PostMapping(ASSIGNROLE)
+    public ResponseEntity<BaseResponse<Boolean>> assignRole(@RequestParam Long userId, @RequestParam RoleName roleName) {
+        userService.assignRoleToUser(userId, roleName);
+        return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+                                             .code(200)
+                                             .data(true)
+                                             .message("Rol başarıyla atandı.")
+                                             .success(true)
+                                             .build());
+        
+    }
+    
 }

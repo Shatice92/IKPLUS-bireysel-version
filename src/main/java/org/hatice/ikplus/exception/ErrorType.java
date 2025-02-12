@@ -15,7 +15,9 @@ public enum ErrorType {
 	INTERNAL_SERVER_ERROR(500,"Server Error, Try Again Later",HttpStatus.INTERNAL_SERVER_ERROR),
 	PASSWORD_MISMATCH(3000,"Girilen şifreler uyuşmamaktadır.",HttpStatus.BAD_REQUEST),
 	INVALID_TOKEN(5000,"Invalid Token",HttpStatus.BAD_REQUEST ),
-	INVALID_CREDENTIALS(1003, "Geçersiz email veya şifre.", HttpStatus.UNAUTHORIZED);
+	INVALID_CREDENTIALS(1003, "Geçersiz email veya şifre.", HttpStatus.UNAUTHORIZED),
+	ENTITY_NOT_FOUND(1004, "İlgili varlık bulunamadı.", HttpStatus.NOT_FOUND);
+	
 	
 	int code;
 	String message;
