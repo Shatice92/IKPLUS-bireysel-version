@@ -1,25 +1,6 @@
 package org.hatice.ikplus.enums;
 
 public enum EmployeeType {
-		FULL_TIME,
-		PART_TIME,
-		CONTRACTOR,
-		INTERN,
-		TEMPORARY,
-		FREELANCER,
-		REMOTE,
-		ON_CALL,
-		CONSULTANT,
-		APPRENTICE,
-		TRAINEE,
-		SEASONAL,
-		VOLUNTEER,
-		RETIRED,
-		TERMINATED,
-		OWNER,
-		BOARD_MEMBER,
-		AGENCY_WORKER,
-		PROBATION,
-		OTHER
+		ACTIVE,PASSIVE
 	
 }

@@ -1,4 +1,4 @@
-package org.hatice.ikplus.Repository.companyrepository;
+package org.hatice.ikplus.repository.companyrepository;
 
 import org.hatice.ikplus.entity.companymanagement.Subscription;
 import org.springframework.data.jpa.repository.JpaRepository;
