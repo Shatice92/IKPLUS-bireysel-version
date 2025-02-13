@@ -1,5 +1,7 @@
 package org.hatice.ikplus.enums;
 
 public enum RoleName {
-    ADMIN, USER
+    SITE_ADMIN,  // Site Yöneticisi
+    COMPANY_ADMIN,  // Şirket Yöneticisi
+    EMPLOYEE  // Personel
 }

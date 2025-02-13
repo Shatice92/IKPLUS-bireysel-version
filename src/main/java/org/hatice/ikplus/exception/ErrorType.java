@@ -19,7 +19,6 @@ public enum ErrorType {
 	PASSWORD_MISMATCH(3000,"Girilen şifreler uyuşmamaktadır.",HttpStatus.BAD_REQUEST),
 	INVALID_TOKEN(5000,"Invalid Token",HttpStatus.BAD_REQUEST ),
 	INVALID_CREDENTIALS(1003, "Geçersiz email veya şifre.", HttpStatus.UNAUTHORIZED);
-
 	
 	int code;
 	String message;
