@@ -7,6 +7,7 @@ import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
+import org.hatice.ikplus.dto.response.userresponse.UserResponse;
 import org.hatice.ikplus.entity.usermanagement.Role;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
@@ -19,8 +20,10 @@ import org.hatice.ikplus.view.userview.VwUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +42,10 @@ public class UserService {
 		return userRepository.getAllUsers();
 	}
 	
-	public User findById(Long id) {
-		Optional<User> userOptional = userRepository.findById(id);
-		return userOptional.orElse(null);
+	public Optional<User> findById(Long id) {
+		return userRepository.findById(id);
 	}
+	
 	
 	public void register(@Valid RegisterRequestDto dto) {
 		// RoleService'i parametre olarak geçiriyoruz
@@ -63,10 +66,13 @@ public class UserService {
 		User user = userOptional.get();
 		
 		// 3. Adım: Kullanıcının rolünü alıyoruz
-		Role role = roleService.findById(user.getRoleId());  // Artık roleId'yi kullanarak tek bir rol alıyoruz
+		Role role = roleService.findById(user.getRoleId())
+		                       .orElseThrow(() -> new IKPlusException(ErrorType.ROLE_NOT_FOUND));  // Artık
+		// roleId'yi kullanarak tek
+		// bir rol alıyoruz
 		
 		// 4. Adım: JWT token oluşturuluyor
-		String token = jwtManager.createToken(user.getId(), role);  // User ID ve rol ile token oluşturuluyor
+		String token = jwtManager.createToken(user.getAuthId(), role);  // User ID ve rol ile token oluşturuluyor
 		
 		// 5. Adım: LoginResponseDto oluşturuluyor
 		LoginResponseDto responseDto = new LoginResponseDto();
@@ -79,8 +85,24 @@ public class UserService {
 	}
 	
 	
+	public UserResponse updateUserRole(Long id, RoleName newRoleName) {
+		// Kullanıcıyı ID'ye göre buluyoruz
+		User user = userRepository.findById(id).orElseThrow(() -> new IKPlusException(ErrorType.USER_NOT_FOUND));
+		
+		// Yeni role'ün ID'sini alıyoruz
+		Long roleId = roleService.findRoleIdByName(newRoleName);
+		
+		// Kullanıcının rolünü güncelliyoruz
+		user.setRoleId(roleId);
+		user.setUpdatedAt(LocalDateTime.now());
+		userRepository.save(user);  // Güncellenmiş kullanıcıyı kaydediyoruz
+		
+		// Güncellenmiş kullanıcıyı UserResponse olarak döndürüyoruz
+		return new UserResponse(user.getStatus(), user.getRoleId(), user.getUpdatedAt());
+	}
 	
 	
-	
-	
+	public Optional<User> findByAuthId(UUID authId) {
+		return userRepository.findByAuthId(authId);
+	}
 }

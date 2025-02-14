@@ -3,6 +3,7 @@ package org.hatice.ikplus.entity.usermanagement;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,4 +44,6 @@ public class User {
 	private UserEducationLevel educationLevel;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	@Column(nullable = false, unique = true, updatable = false)
+	private UUID authId = UUID.randomUUID();  // Kullanıcının benzersiz authId'si
 }

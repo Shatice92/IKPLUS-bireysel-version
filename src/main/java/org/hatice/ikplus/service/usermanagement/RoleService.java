@@ -51,23 +51,17 @@ public class RoleService {
 		return new RoleResponse(role.getName(), role.getPermissions());
 	}
 	
-	public Role findById(Long roleId) {
-		Optional<Role> roleOptional = roleRepository.findById(roleId);
-		if (roleOptional.isEmpty()) {
-			return null;
-		}
-		return roleOptional.get();
+	public Optional<Role> findById(Long roleId) {
+		return roleRepository.findById(roleId);
 	}
 	
 	public Long findRoleIdByName(RoleName roleName) {
 		// RoleName'e göre Role'ü alıyoruz
 		Role role = roleRepository.findByName(roleName)
-		                          .orElseThrow(() -> new IKPlusException(ErrorType.ROLE_NOT_FOUND)); // Exception'ı doğru kullanıyoruz
+		                          .orElseThrow(() -> new IKPlusException(ErrorType.ROLE_NOT_FOUND)); // Exception'ı
+		// doğru kullanıyoruz
 		return role.getId(); // Role ID'sini döndürüyoruz
 	}
-	
-	
-	
 	
 	
 }

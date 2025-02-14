@@ -18,7 +18,7 @@ import static org.hatice.ikplus.constant.Endpoints.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(Endpoints.EMPLOYEE)
+@RequestMapping(Endpoints.COMPANY_MANAGER_EMPLOYEES)
 @RequiredArgsConstructor
 public class EmployeeController {
 	private final EmployeeService employeeService;
