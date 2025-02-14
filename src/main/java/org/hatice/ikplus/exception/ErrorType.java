@@ -19,7 +19,8 @@ public enum ErrorType {
 	PASSWORD_MISMATCH(3000,"Girilen şifreler uyuşmamaktadır.",HttpStatus.BAD_REQUEST),
 	INVALID_TOKEN(5000,"Invalid Token",HttpStatus.BAD_REQUEST ),
 	INVALID_CREDENTIALS(1003, "Geçersiz email veya şifre.", HttpStatus.UNAUTHORIZED),
-	ENTITY_NOT_FOUND(1001, "Kayıt bulunamadı.", HttpStatus.UNAUTHORIZED);
+	ROLE_NOT_FOUND(4001, "Role not found", HttpStatus.NOT_FOUND);
+
 	
 	int code;
 	String message;

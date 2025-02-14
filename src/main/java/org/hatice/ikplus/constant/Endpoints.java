@@ -54,6 +54,6 @@ public class Endpoints {
 	public static final String UPDATEUSER = "/update-user/{id}";
 	
 	
-	
-
+	public static final String ASSIGN = "/assign";
+	public static final String GETBYROLENAME = "/get-by-role-name/{roleName}";
 }

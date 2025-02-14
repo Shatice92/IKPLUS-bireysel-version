@@ -12,3 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+  ikplus:
+    jwt:
+      secret-key: "RS9]=_GH#L8(#xyl~D=kmJ'kP-2U^dOD+Y[6nYZRm2-5~U,vTs"
+      issuer: "IKPLUS_JWT_ISSUER"
