@@ -6,6 +6,7 @@ import org.hatice.ikplus.constant.Endpoints;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
+import org.hatice.ikplus.dto.request.userrequest.UpdateUserRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
@@ -98,5 +99,13 @@ public class UserController {
                                              .build());
         
     }
+    /*
+    @PutMapping(UPDATEUSER)
+    public ResponseEntity<BaseResponse<Boolean>> updateUser(@PathVariable Long userId, @RequestBody UpdateUserRequestDto dto) {
+        return ResponseEntity.ok(BaseResponse.builder()
+                                         .data(userService.up))
+    }
+    
+     */
     
 }
