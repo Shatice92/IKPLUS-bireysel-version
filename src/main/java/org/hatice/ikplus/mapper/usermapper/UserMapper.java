@@ -3,20 +3,24 @@ package org.hatice.ikplus.mapper.usermapper;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.entity.usermanagement.User;
+import org.hatice.ikplus.service.usermanagement.RoleService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", // Springde çalışması için gerekli.
-		unmappedTargetPolicy = ReportingPolicy.IGNORE, // Eğer DTO'daki bir alan User Entity'sine eşleşmiyorsa, MapStruct bu durumu görmezden gelir ve hata üretmez.
-		unmappedSourcePolicy = ReportingPolicy.IGNORE) // Aynı şekilde, RegisterRequestDto içindeki ancak User tarafında eşlenmeyen alanlar için hata oluşturulmaz.
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
-	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 	
-	
+	// SaveUserRequestDto'dan User'a dönüşüm
+	@Mapping(target = "status", constant = "ACTIVE")
+	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	User fromSaveUserDto(SaveUserRequestDto dto);
 	
-	User fromRegisterDto(RegisterRequestDto dto);
-	
+	// RegisterRequestDto'dan User'a dönüşüm
+	@Mapping(target = "status", constant = "ACTIVE")
+	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+	@Mapping(target = "roleId", expression = "java(roleService.findRoleIdByName(org.hatice.ikplus.enums.RoleName.VISITOR))")
+	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);  // RoleService parametre olarak alındı
 }

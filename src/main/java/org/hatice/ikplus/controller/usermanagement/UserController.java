@@ -7,6 +7,7 @@ import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
+import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
@@ -42,16 +43,20 @@ public class UserController {
     }
     
     @PostMapping(LOGIN)
-    public ResponseEntity<BaseResponse<User>> login(@RequestBody @Valid LoginRequestDto dto) {
-        User user = userService.login(dto);
+    public ResponseEntity<BaseResponse<LoginResponseDto>> login(@RequestBody @Valid LoginRequestDto dto) {
+        // UserService'ten login fonksiyonunu çağırıyoruz
+        LoginResponseDto loginResponse = userService.login(dto);
         
-        return ResponseEntity.ok(BaseResponse.<User>builder()
+        // Geriye token ve kullanıcı bilgilerini içeren bir response dönüyoruz
+        return ResponseEntity.ok(BaseResponse.<LoginResponseDto>builder()
                                              .code(200)
-                                             .data(user)
+                                             .data(loginResponse)  // Token ve kullanıcı bilgileri burada olacak
                                              .message("Giriş başarılı.")
                                              .success(true)
                                              .build());
     }
+    
+    
     
     
     @PostMapping(SAVEUSER)
@@ -85,4 +90,11 @@ public class UserController {
                                              .success(true)
                                              .build());
     }
+    
+    
+    
+    
+    
+    
+    
 }
