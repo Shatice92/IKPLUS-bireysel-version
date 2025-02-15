@@ -92,9 +92,17 @@ public class Endpoints {
 	public static final String FINDBYID = "/find-by-id/{id}";
 	
 	
+	//kontrol et
+	public static final String APPROVE = "/approve/{id}";
+	public static final String REJECT = "/reject/{id}";
+	public static final String GETEXPENSESBYEMPLOYEEID = "/get-expenses-by-employee/{id}";
+	public static final String GETASSETBYEMPLOYEEID = "/get-asset-by-employeeId/{employeeId}";
+	
+	
 	public static final String REGISTER = "/register";
 	public static final String LOGIN = "/login";
 	public static final String ASSIGNROLE = "/assign-role";
+	
 	
 	
 }

@@ -73,7 +73,7 @@ public class EmployeeController {
 	@GetMapping(LIST)
 	public ResponseEntity<BaseResponse<List<EmployeeResponse>>> getEmployees() {
 		return ResponseEntity.ok(BaseResponse.<List<EmployeeResponse>>builder()
-		                                     .data(employeeService.findAll())
+		                                     .data(employeeService.getEmployeeListByRole())
 		                                     .message("All employees listed")
 		                                     .code(200)
 		                                     .success(true)
