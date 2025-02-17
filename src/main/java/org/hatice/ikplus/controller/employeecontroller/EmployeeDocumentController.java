@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(Endpoints.EMPLOYEEDOCUMENT)
+@RequestMapping(Endpoints.COMPANY_MANAGER_EMPLOYEE_DOCUMENT)
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class EmployeeDocumentController {

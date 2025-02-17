@@ -3,6 +3,7 @@ package org.hatice.ikplus.entity.usermanagement;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class User {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	@Column(unique = true)
+	@Column(unique = true,nullable = false)
 	private String email;
 	private String password;
 	@Enumerated(EnumType.STRING)
@@ -43,4 +44,7 @@ public class User {
 	private UserEducationLevel educationLevel;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private Long employeeId;
+	@Column(nullable = false, unique = true, updatable = false)
+	private UUID authId = UUID.randomUUID();  // Kullanıcının benzersiz authId'si
 }
