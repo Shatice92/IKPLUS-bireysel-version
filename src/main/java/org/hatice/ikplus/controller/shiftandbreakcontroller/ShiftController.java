@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Endpoints.SHIFT)
+@RequestMapping(Endpoints.COMPANY_MANAGER_SHIFTS)
 @RequiredArgsConstructor
 public class ShiftController {
 	private final ShiftService shiftService;

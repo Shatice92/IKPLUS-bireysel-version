@@ -34,23 +34,24 @@ public class JwtManager {
 	}
 	private final long EXTIME = 1000L * 60 * 15; // 15 dakika
 	
-	public String createToken(Long authId, Role role) {
+	public String createToken(UUID authId, Role role) {
 		Algorithm algorithm = Algorithm.HMAC512(SECRET_KEY);
 		Date creationDate = new Date(System.currentTimeMillis());
 		Date expirationDate = new Date(System.currentTimeMillis() + EXTIME);
 		
-		// Tek bir rolün adını alıyoruz
-		String roleName = role.getName().name();  // RoleName enum'unun string karşılığı
+		// Role enum'unun string karşılığını al
+		String roleName = role.getName().name();
 		
 		return JWT.create()
 		          .withJWTId(UUID.randomUUID().toString())  // Her token benzersiz olur
 		          .withIssuer(ISSUER)
 		          .withIssuedAt(creationDate)
 		          .withExpiresAt(expirationDate)
-		          .withClaim("authId", authId)
-		          .withClaim("role", roleName)  // Tek bir rolü burada ekliyoruz
+		          .withClaim("authId", authId.toString()) // UUID'yi String olarak ekle
+		          .withClaim("role", roleName)  // Rolü ekle
 		          .sign(algorithm);
 	}
+	
 	
 	
 	
