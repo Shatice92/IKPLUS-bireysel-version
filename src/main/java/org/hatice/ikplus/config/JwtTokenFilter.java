@@ -43,6 +43,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		log.info("JwtTokenFilter doFilterInternal çalıştı...");
 		
+		// Eğer istek login endpoint'ine geliyorsa, token kontrolü yapma
+		if (request.getRequestURI().equals("/v1/dev/user/login")) {
+			filterChain.doFilter(request, response);  // token kontrolü atlanır
+			return;
+		}
+		
 		// Header'dan gelen authorization bilgisini alıyoruz
 		String authorizationHeader = request.getHeader("Authorization");
 		log.debug("Gelen Authorization Header: {}", authorizationHeader);
@@ -54,6 +60,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			
 			// Token'ı doğrulayıp TokenInfo alıyoruz
 			Optional<TokenInfo> tokenInfoOptional = jwtManager.validateToken(token);
+			if (!tokenInfoOptional.isPresent()) {
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				response.getWriter().write("Geçersiz token");
+				return;
+			}
 			if (tokenInfoOptional.isPresent()) {
 				TokenInfo tokenInfo = tokenInfoOptional.get();
 				UUID authId = tokenInfo.getAuthId();
@@ -73,10 +84,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 				
 				// Güvenlik bağlamını ayarlıyoruz
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-			} else {
+			}
+			else {
 				log.error("Geçersiz token");
 			}
-		} else {
+		}
+		else {
 			log.warn("Authorization header'ı 'Bearer ' ile başlamıyor.");
 		}
 		
