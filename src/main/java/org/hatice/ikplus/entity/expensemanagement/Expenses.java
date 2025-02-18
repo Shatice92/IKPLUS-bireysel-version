@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hatice.ikplus.enums.ExpensesStatus;
+import org.hatice.ikplus.enums.ExpensesType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ public class Expenses {
 	private String description;
 	private String receipt; // Fatura URL link veya IMAGE linki olcak.
 	@Enumerated(EnumType.STRING)
-	private ExpensesStatus status;
+	private ExpensesType status;
 	private LocalDate submittedAt; // harcamanın yapıldığı zaman.
 	private Long approvedByUserId;
 	private LocalDate updateAt;

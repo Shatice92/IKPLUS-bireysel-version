@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Endpoints.BREAK)
+@RequestMapping(Endpoints.COMPANY_MANAGER_BREAK)
 @RequiredArgsConstructor
 public class BreakController {
 	private final BreakService breakService;

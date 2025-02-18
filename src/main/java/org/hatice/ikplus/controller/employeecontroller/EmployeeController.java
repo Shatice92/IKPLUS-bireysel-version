@@ -18,7 +18,7 @@ import static org.hatice.ikplus.constant.Endpoints.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(Endpoints.EMPLOYEE)
+@RequestMapping(Endpoints.COMPANY_MANAGER_EMPLOYEES)
 @RequiredArgsConstructor
 public class EmployeeController {
 	private final EmployeeService employeeService;
@@ -73,7 +73,7 @@ public class EmployeeController {
 	@GetMapping(LIST)
 	public ResponseEntity<BaseResponse<List<EmployeeResponse>>> getEmployees() {
 		return ResponseEntity.ok(BaseResponse.<List<EmployeeResponse>>builder()
-		                                     .data(employeeService.findAll())
+		                                     .data(employeeService.getEmployeeListByRole())
 		                                     .message("All employees listed")
 		                                     .code(200)
 		                                     .success(true)
