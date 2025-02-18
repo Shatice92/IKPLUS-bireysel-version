@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ikplusdb
-    username: postgres
-    password: root
+    url: ${IKPLUS_POSTGRE_URL}
+    username: ${IKPLUS_POSTGRE_USERNAME}
+    password: ${IKPLUS_POSTGRE_PASSWORD}
 
   jpa:
     hibernate:
@@ -16,5 +16,5 @@ spring:
 
   ikplus:
     jwt:
-      secret-key: "RS9]=_GH#L8(#xyl~D=kmJ'kP-2U^dOD+Y[6nYZRm2-5~U,vTs"
-      issuer: "IKPLUS_JWT_ISSUER"
+      secret-key: ${IKPLUS_JWT_SECRETKEY}
+      issuer: ${IKPLUS_JWT_ISSUER}
