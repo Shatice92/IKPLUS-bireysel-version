@@ -19,6 +19,7 @@ public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String userImageUrl;
 	private Long companyId;
 	private Long userId;
 	private String comment;
