@@ -102,6 +102,7 @@ public class Endpoints {
 	public static final String REGISTER = "/register";
 	public static final String LOGIN = "/login";
 	public static final String ASSIGNROLE = "/assign-role";
+	public static final String UPDATEUSER = "/update-user/{id}";
 	
 	
 	
