@@ -30,7 +30,8 @@ public class AssetsController {
 		                                     .build());
 	}
 	
-	@GetMapping(GETBYID)
+	// TODO bu endpoint sadece employee e açık olacak .
+	@GetMapping(GETBYID)//
 	public ResponseEntity<BaseResponse<AssetResponseDto>> getAssetById(@PathVariable Long id) {
 		return ResponseEntity.ok(BaseResponse.<AssetResponseDto>builder()
 		                                     .data(assetsService.findById(id))
