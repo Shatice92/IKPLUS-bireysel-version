@@ -25,6 +25,7 @@ public class Company {
 	private String Logo;
 	@Enumerated(EnumType.STRING)
 	private CompanyStatus status;
+	private boolean isApproved;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
 }
