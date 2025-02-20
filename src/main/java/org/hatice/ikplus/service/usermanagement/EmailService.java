@@ -14,7 +14,8 @@ public class EmailService {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(toEmail);
 		message.setSubject("IKPlus - Email Verification");
-		message.setText("Please verify your email by clicking the link: " + verificationLink);
+		message.setText("Kaydınızı onaylamak için onay verin: " + verificationLink);
+		message.setFrom("infoikplus@gmail.com"); // Burayı da güncelle
 		
 		mailSender.send(message);
 	}

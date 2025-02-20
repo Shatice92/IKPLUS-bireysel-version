@@ -16,8 +16,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: berkaybasoll@gmail.com  # Buraya oluşturduğun maili koy
-    password: ${IKPLUS_MAIL_PASSWORD}  # UYGULAMA MAILI ONAY CART CURT SEN BILIYON
+    username: infoikplus  # Buraya oluşturduğun maili koy
+    password: ${IKPLUS_MAIL_PASSWORD}
     properties:
       mail:
         smtp:
