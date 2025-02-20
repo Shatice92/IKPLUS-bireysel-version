@@ -2,14 +2,17 @@ package org.hatice.ikplus.service.usermanagement;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hatice.ikplus.repository.usermanagement.AuthorizationRepository;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
+import org.hatice.ikplus.entity.usermanagement.Authorization;
 import org.hatice.ikplus.entity.usermanagement.Role;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
+import org.hatice.ikplus.enums.UserStatus;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
 import org.hatice.ikplus.mapper.UserMapper;
@@ -31,6 +34,8 @@ public class UserService {
 	private final UserMapper userMapper;
 	private final JwtManager jwtManager;
 	private final RoleService roleService;
+	private final AuthorizationRepository authorizationRepository;
+	private final EmailService emailService;
 	
 	
 	public void save(@Valid SaveUserRequestDto dto) {
@@ -51,6 +56,19 @@ public class UserService {
 		// RoleService'i parametre olarak geçiriyoruz
 		User user = userMapper.fromRegisterDto(dto, roleService);
 		userRepository.save(user);
+		
+		// Create authorization entry
+		Authorization authorization = Authorization.builder()
+		                                           .authId(user.getAuthId())
+		                                           .userId(user.getId())
+		                                           .createdAt(LocalDateTime.now())
+		                                           .build();
+		
+		authorizationRepository.save(authorization);
+		
+		// Send verification email
+		String verificationLink = "http://localhost:9090/v1/dev/user/verify/" + user.getAuthId();
+		emailService.sendVerificationEmail(user.getEmail(), verificationLink);
 	}
 	
 	public LoginResponseDto login(@Valid LoginRequestDto dto) {

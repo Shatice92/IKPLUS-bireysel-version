@@ -2,20 +2,21 @@ package org.hatice.ikplus.controller.usermanagement;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hatice.ikplus.constant.Endpoints;
+import org.hatice.ikplus.repository.usermanagement.AuthorizationRepository;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
+import org.hatice.ikplus.entity.usermanagement.Authorization;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
+import org.hatice.ikplus.enums.UserStatus;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
 import org.hatice.ikplus.service.usermanagement.UserService;
 import org.hatice.ikplus.view.userview.VwUser;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,8 @@ import static org.hatice.ikplus.constant.Endpoints.*;
 @CrossOrigin("*")
 public class UserController {
 	private final UserService userService;
+	private final AuthorizationRepository authorizationRepository;
+	private final org.hatice.ikplus.repository.usermanagement.UserRepository userRepository;
 	
 	@PostMapping(REGISTER)
 	public ResponseEntity<BaseResponse<Boolean>> registerUser(@RequestBody @Valid RegisterRequestDto dto) {
@@ -39,7 +42,7 @@ public class UserController {
 		userService.register(dto);
 		
 		return ResponseEntity.ok(BaseResponse.<Boolean>builder().code(200).data(true)
-		                                     .message("Üyelik Başarıyla Oluşturuldu.").success(true).build());
+		                                     .message("Mailinize Onay Kodu Gönderildi.").success(true).build());
 	}
 	
 	@PostMapping(LOGIN)
@@ -95,5 +98,23 @@ public class UserController {
 		                                     .message("User found successfully").success(true).build());
 	}
 	
-	
+	@GetMapping(VERIFY)
+	public ResponseEntity<?> verifyUser(@PathVariable UUID authId) {
+		Authorization authorization = authorizationRepository.findByAuthId(authId)
+		                                                     .orElseThrow(() -> new IKPlusException(ErrorType.AUTHORIZATION_NOT_FOUND));
+		
+		User user = userRepository.findById(authorization.getUserId())
+		                          .orElseThrow(() -> new IKPlusException(ErrorType.USER_NOT_FOUND));
+		
+		user.setStatus(UserStatus.ACTIVE);
+		userRepository.save(user);
+		
+		// ✅ Başarılı doğrulama sonrası basit bir HTML sayfası dönelim
+		String successHtml = "<html><body><h1>Email Doğrulandı ✅</h1><p>Artik hesabiniza giris yapabilirsiniz" +
+				".</p></body></html>";
+		
+		return ResponseEntity.ok()
+		                     .header("Content-Type", "text/html")
+		                     .body(successHtml);
+	}
 }

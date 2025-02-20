@@ -24,7 +24,10 @@ public enum ErrorType {
 	LEAVE_NOT_FOUND(6001, "Leave not found", HttpStatus.NOT_FOUND),
 	LEAVE_ALREADY_APPROVED(6002, "Leave already approved", HttpStatus.BAD_REQUEST),
 	LEAVE_ALREADY_REJECTED(6003, "Leave already rejected", HttpStatus.BAD_REQUEST),
-	LEAVELIST_EMPTY(6004, "Leavelist is Empty", HttpStatus.NOT_FOUND);
+	LEAVELIST_EMPTY(6004, "Leavelist is Empty", HttpStatus.NOT_FOUND),
+	AUTHORIZATION_NOT_FOUND(7001, "Authorization not found", HttpStatus.NOT_FOUND),
+	EMAIL_ALREADY_EXISTS(1006, "Email already exists", HttpStatus.BAD_REQUEST);
+	
 	
 	int code;
 	String message;

@@ -32,8 +32,9 @@ public class SecurityConfig {
 		    .csrf(csrf -> csrf.disable()) // ✅ CSRF'yi devre dışı bırak
 		    .authorizeHttpRequests(req -> req
 				    // Register ve Login işlemleri için herkese açık izin
-				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login")
+				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login", "/v1/dev/user/verify/**")
 				    .permitAll()
+				    
 				    
 				    // Admin, Company Manager, Employee gibi özel roller için yetkilendirme
 				    .requestMatchers(Endpoints.ADMIN + "/**").hasAuthority("ROLE_ADMIN")
@@ -53,6 +54,7 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("*"));
 		configuration.setAllowedOrigins(List.of("http://localhost:3000")); // ✅ FRONTEND DOMAINİNİ EKLE
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
