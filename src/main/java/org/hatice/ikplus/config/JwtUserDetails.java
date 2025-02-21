@@ -6,6 +6,7 @@ import org.hatice.ikplus.entity.usermanagement.Role;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.service.usermanagement.RoleService;
 import org.hatice.ikplus.service.usermanagement.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class JwtUserDetails implements UserDetailsService {
-	private final UserService userService;
+	
+	private final @Lazy UserService userService;
 	private final RoleService roleService;
 	
 	@Override
@@ -38,8 +40,7 @@ public class JwtUserDetails implements UserDetailsService {
 		}
 		
 		User user = optionalUser.get();
-
-// Kullanıcının rolü alınıyor
+		
 		Optional<Role> optionalRole = roleService.findById(user.getRoleId());
 		if (optionalRole.isEmpty()) {
 			log.warn("Kullanıcıya atanmış bir rol bulunamadı! UserID: " + user.getId());

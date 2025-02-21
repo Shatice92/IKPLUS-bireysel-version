@@ -110,11 +110,14 @@ public class UserController {
 		userRepository.save(user);
 		
 		// ✅ Başarılı doğrulama sonrası basit bir HTML sayfası dönelim
-		String successHtml = "<html><body><h1>Email Doğrulandı ✅</h1><p>Artik hesabiniza giris yapabilirsiniz" +
+		String successHtml = "<html><body><h1>Email Dogrulandi ✅</h1><p>Artik hesabiniza giris yapabilirsiniz" +
 				".</p></body></html>";
 		
 		return ResponseEntity.ok()
 		                     .header("Content-Type", "text/html")
 		                     .body(successHtml);
 	}
+	
+	
+	
 }

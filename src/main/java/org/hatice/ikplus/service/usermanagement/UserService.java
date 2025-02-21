@@ -20,6 +20,7 @@ import org.hatice.ikplus.repository.usermanagement.UserRepository;
 import org.hatice.ikplus.util.JwtManager;
 import org.hatice.ikplus.view.userview.VwUser;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public class UserService {
 	private final RoleService roleService;
 	private final AuthorizationRepository authorizationRepository;
 	private final EmailService emailService;
+	private final PasswordEncoder passwordEncoder;
 	
 	
 	public void save(@Valid SaveUserRequestDto dto) {
@@ -72,24 +74,25 @@ public class UserService {
 	}
 	
 	public LoginResponseDto login(@Valid LoginRequestDto dto) {
-		// 1. Adım: dto içindeki email ve password bilgisi ile kayıtlı bir kullanıcı var mı?
-		Optional<User> userOptional = userRepository.findOptionalByEmailAndPassword(dto.email(), dto.password());
+		// 1. Adım: Kullanıcıyı email'e göre bul
+		Optional<User> userOptional = userRepository.findByEmail(dto.email());
 		
-		// Kullanıcı bulunmazsa hata fırlatıyoruz
 		if (userOptional.isEmpty()) {
-			throw new IKPlusException(ErrorType.INVALID_CREDENTIALS);
+			throw new IKPlusException(ErrorType.INVALID_CREDENTIALS);  // Kullanıcı bulunamadı
 		}
 		
-		// 2. Adım: Kullanıcıyı alıyoruz
 		User user = userOptional.get();
 		
-		// 3. Adım: Kullanıcının rolünü alıyoruz
-		Role role = roleService.findById(user.getRoleId())
-		                       .orElseThrow(() -> new IKPlusException(ErrorType.ROLE_NOT_FOUND));  // Artık
-		// roleId'yi kullanarak tek
-		// bir rol alıyoruz
+		// 2. Adım: Şifreyi kontrol et (hash karşılaştırması)
+		if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
+			throw new IKPlusException(ErrorType.INVALID_CREDENTIALS);  // Şifre yanlış
+		}
 		
-		// 4. Adım: JWT token oluşturuluyor
+		// 3. Adım: Kullanıcının rolünü al
+		Role role = roleService.findById(user.getRoleId())
+		                       .orElseThrow(() -> new IKPlusException(ErrorType.ROLE_NOT_FOUND));
+		
+		// 4. Adım: JWT token oluştur
 		String token = jwtManager.createToken(user.getAuthId(), role);
 		
 		LoginResponseDto responseDto = new LoginResponseDto();
@@ -97,9 +100,9 @@ public class UserService {
 		responseDto.setUserId(user.getId());
 		responseDto.setRole(role);
 		
-		
 		return responseDto;
 	}
+	
 	
 	
 	public UserResponse updateUserRole(Long id, RoleName newRoleName) {
