@@ -6,8 +6,11 @@ import org.hatice.ikplus.constant.Endpoints;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
+import org.hatice.ikplus.dto.request.userrequest.UserStatusRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
+import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
+import org.hatice.ikplus.dto.response.userresponse.UserProfileResponse;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
@@ -54,46 +57,76 @@ public class UserController {
 	}
 	
 	
-	@PostMapping(ADMIN_SAVE_USER)
-	public ResponseEntity<BaseResponse<Boolean>> save(@RequestBody @Valid SaveUserRequestDto dto) {
-		userService.save(dto);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder().code(200).data(true)
-		                                     .message("User Başarıyla Kaydedildi.").success(true).build());
-	}
-	
-	@GetMapping(ADMIN_GET_ALL_USERS)
-	public ResponseEntity<BaseResponse<List<VwUser>>> getAllUsers() {
-		return ResponseEntity.ok(BaseResponse.<List<VwUser>>builder().code(200).data(userService.getAllUsers())
-		                                     .message("Kullanıcılar Başarıyla Getirildi.").success(true).build());
-	}
-	
-	@GetMapping(ADMIN_FIND_BY_ID )
-	public ResponseEntity<BaseResponse<User>> findById(@PathVariable Long id) {
-		User user = userService.findById(id).orElseThrow(() -> new IKPlusException(ErrorType.USER_NOT_FOUND));
-		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user)
-		                                     .message("Kullanıcı Başarıyla Bulundu.").success(true).build());
-	}
-	
-	
-	@PutMapping(ADMIN_UPDATE_USER)
-	public ResponseEntity<BaseResponse<UserResponse>> updateUserRole(@PathVariable Long id,
-	                                                                 @RequestParam RoleName newRoleName) {
-		UserResponse userResponse = userService.updateUserRole(id, newRoleName);
-		// Başarılı yanıt döndürüyoruz
-		return ResponseEntity.ok(BaseResponse.<UserResponse>builder().code(200)
-		                                     .message("User role successfully updated").data(userResponse).success(true)
-		                                     .build());
-	}
-	
-	
 	public ResponseEntity<BaseResponse<User>> findUserByAuthId(@PathVariable UUID id) {
 		Optional<User> optionalUser = userService.findByAuthId(id);
 		if (optionalUser.isEmpty()) throw new IKPlusException(ErrorType.USER_NOT_FOUND);
 		User user = optionalUser.get();
 		
-		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user)
+		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user).message("User found successfully")
+		                                     .success(true).build());
+	}
+	
+	// Kullanıcı bilgilerini token ile al
+	@GetMapping(GET_PROFILE_BY_TOKEN)
+	public ResponseEntity<BaseResponse<UserProfileResponse>> getProfileByToken(@RequestHeader("Authorization") String authorizationHeader) {
+		// Authorization header'ından token'ı al
+		String token = authorizationHeader.replace("Bearer ", "");
+		
+		// Token ile kullanıcı bilgilerini al
+		Optional<TokenInfo> tokenInfoOpt = userService.getUserProfileByToken(token);
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Geçersiz token
+		}
+		
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		Optional<User> userOpt = userService.findByAuthId(tokenInfo.getAuthId());
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Kullanıcı bulunamadı
+		}
+		
+		User user = userOpt.get();
+		UserProfileResponse userProfileResponse =
+				new UserProfileResponse(user.getFirstName(), user.getLastName(), user.getEmail(), user.getGender(),
+				                        user.getPhoneNumber(), user.getBirthDate(), user.getMaritalStatus(),
+				                        user.getBloodType(), user.getIdentificationNumber(), user.getNationality(),
+				                        user.getEducationLevel(), user.getStatus());
+		
+		return ResponseEntity.ok(BaseResponse.<UserProfileResponse>builder().code(200).data(userProfileResponse)
 		                                     .message("User found successfully").success(true).build());
 	}
 	
 	
+	// Kullanıcı durumunu güncelle
+	@PutMapping(UPDATE_STATUS)
+	public ResponseEntity<BaseResponse<String>> updateUserStatus(@RequestBody UserStatusRequestDto request,
+	                                                             @RequestHeader("Authorization") String token) {
+		try {
+			
+			boolean isUpdated = userService.updateUserStatus(String.valueOf(request.status()), token);
+			
+			if (isUpdated) {
+				// Durum güncelleme başarılı ise
+				BaseResponse<String> response =
+						BaseResponse.<String>builder().code(200).data("Status updated successfully")
+						            .message("User status updated successfully.").success(true).build();
+				return ResponseEntity.ok(response);
+			}
+			else {
+				// Kullanıcı bulunamadı
+				BaseResponse<String> response = BaseResponse.<String>builder().code(400).data("Failed to update " +
+						                                                                              "status")
+				                                            .message("User not found or failed to update.")
+				                                            .success(false).build();
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			}
+		}
+		catch (Exception e) {
+			// Hata durumunda response
+			BaseResponse<String> response =
+					BaseResponse.<String>builder().code(500).data("Error occurred during status update")
+					            .message("An unexpected error occurred while updating the status.").success(false)
+					            .build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
 }

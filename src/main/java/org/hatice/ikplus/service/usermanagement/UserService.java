@@ -1,15 +1,18 @@
 package org.hatice.ikplus.service.usermanagement;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
+import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
 import org.hatice.ikplus.entity.usermanagement.Role;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
+import org.hatice.ikplus.enums.UserStatus;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
 import org.hatice.ikplus.mapper.UserMapper;
@@ -106,5 +109,38 @@ public class UserService {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		return userRepository.findByEmail(email).orElseThrow(() -> new IKPlusException(ErrorType.USER_NOT_FOUND));
 	}
+	
+	
+	public Optional<TokenInfo> getUserProfileByToken(String token) {
+		// Token'ı doğrula
+		return jwtManager.validateToken(token);
+		
+	}
+	
+	
+	@Transactional
+	public boolean updateUserStatus(String status, String token) {
+		// Token doğrulaması yapılır
+		var tokenInfo = jwtManager.validateToken(token);
+		if (tokenInfo.isEmpty()) {
+			throw new IKPlusException(ErrorType.INVALID_TOKEN);
+		}
+		
+		// Token'den alınan kullanıcı id'sine göre kullanıcıyı buluruz
+		User user = userRepository.findByAuthId(tokenInfo.get().getAuthId())
+		                          .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı!"));
+		
+		// Status geçerli mi kontrol edelim
+		try {
+			UserStatus newStatus = UserStatus.valueOf(status.toUpperCase());
+			user.setStatus(newStatus);
+			userRepository.save(user);
+			return true;
+		}
+		catch (IllegalArgumentException e) {
+			throw new RuntimeException("Geçersiz durum değeri: " + status, e);
+		}
+	}
+	
 	
 }
