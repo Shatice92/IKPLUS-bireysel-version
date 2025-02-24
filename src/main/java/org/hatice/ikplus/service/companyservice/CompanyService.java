@@ -23,7 +23,7 @@ public class CompanyService {
 		Company company = companyMapper.toEntity(companyRequestDTO);
 		companyRepository.save(company);
 	}
-	
+
 	public CompanyResponse approveCompany(Long id) {
 		Company company = companyRepository.findById(id)
 		                                   .orElseThrow(() -> new RuntimeException("Company not found"));

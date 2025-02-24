@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 import static org.hatice.ikplus.constant.Endpoints.*;
 
 @CrossOrigin("*")
@@ -31,7 +32,9 @@ public class CompanyController {
 		                                     .success(true)
 		                                     .build());
 	}
+
 	@PutMapping(APPROVE)
+
 	public ResponseEntity<BaseResponse<CompanyResponse>> approveCompany(@PathVariable Long id) {
 		CompanyResponse responseDTO = companyService.approveCompany(id);
 		return ResponseEntity.ok(BaseResponse.<CompanyResponse>builder()
@@ -43,6 +46,7 @@ public class CompanyController {
 	}
 	
 	@PutMapping(REJECT)
+
 	public ResponseEntity<BaseResponse<CompanyResponse>> rejectCompany(@PathVariable Long id) {
 		CompanyResponse responseDTO = companyService.rejectCompany(id);
 		return ResponseEntity.ok(BaseResponse.<CompanyResponse>builder()
@@ -53,7 +57,9 @@ public class CompanyController {
 		                                     .build());
 	}
 	
+
 	@PutMapping(UPDATE)
+
 	public ResponseEntity<BaseResponse<CompanyResponse>> updateCompany(@PathVariable Long id,
 	                                                                   @RequestBody CompanyRequestDto updatedCompany) {
 		CompanyResponse responseDTO = companyService.updateCompany(id, updatedCompany);
@@ -65,7 +71,9 @@ public class CompanyController {
 		                                     .build());
 	}
 	
+
 	@DeleteMapping(DELETE)
+
 	public ResponseEntity<BaseResponse<Boolean>> deleteCompany(@PathVariable Long id) {
 		companyService.deleteCompany(id);
 		return ResponseEntity.ok(BaseResponse.<Boolean>builder()
@@ -76,7 +84,9 @@ public class CompanyController {
 		                                     .build());
 	}
 	
+
 	@GetMapping(GETBYID)
+
 	public ResponseEntity<BaseResponse<CompanyResponse>> getCompanyById(@PathVariable Long id) {
 		CompanyResponse responseDTO = companyService.getCompanyById(id);
 		return ResponseEntity.ok(BaseResponse.<CompanyResponse>builder()
@@ -88,6 +98,7 @@ public class CompanyController {
 	}
 	
 	@GetMapping(LIST)
+
 	public ResponseEntity<BaseResponse<List<CompanyResponse>>> getAllCompanies() {
 		List<CompanyResponse> companies = companyService.getAllCompanies();
 		return ResponseEntity.ok(BaseResponse.<List<CompanyResponse>>builder()
