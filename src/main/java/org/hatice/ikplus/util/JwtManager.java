@@ -33,7 +33,7 @@ public class JwtManager {
 		ISSUER = this.issuer;
 	}
 	
-	private final long EXTIME = 1000L * 60 * 15; // 15 dakika
+	private final long EXTIME = 1000L * 60 * 45; // 45 dakika
 	
 	public String createToken(UUID authId, Role role) {
 		Algorithm algorithm = Algorithm.HMAC512(SECRET_KEY);

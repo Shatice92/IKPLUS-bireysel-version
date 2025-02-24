@@ -27,4 +27,5 @@ public class Company {
 	private CompanyStatus status;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
+	private boolean isApproved;
 }

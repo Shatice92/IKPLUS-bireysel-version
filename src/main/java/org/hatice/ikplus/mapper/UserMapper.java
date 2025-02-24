@@ -3,6 +3,7 @@ package org.hatice.ikplus.mapper;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.UserStatusRequestDto;
+import org.hatice.ikplus.dto.request.userrequest.UserUpdateRequestDto;
 import org.hatice.ikplus.dto.response.userresponse.UserProfileResponse;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.service.usermanagement.RoleService;
@@ -29,9 +30,11 @@ public interface UserMapper {
 	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);  // RoleService parametre olarak alındı
 	
 	
+	User fromUserUpdateRequestDto(UserUpdateRequestDto dto);
+	
+	User fromUserStatusRequestDto(UserStatusRequestDto dto);
 	
 	
-	UserProfileResponse fromUserStatusRequestDto(UserStatusRequestDto dto);
 	
 	
 	

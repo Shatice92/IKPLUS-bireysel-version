@@ -1,23 +1,17 @@
 package org.hatice.ikplus.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum UserBloodType {
-    A_POSITIVE("A+"),
-    A_NEGATIVE("A-"),
-    B_POSITIVE("B+"),
-    B_NEGATIVE("B-"),
-    AB_POSITIVE("AB+"),
-    AB_NEGATIVE("AB-"),
-    O_POSITIVE("O+"),
-    O_NEGATIVE("O-");
+    A_POZITIF,
+    A_NEGATIF,
+    B_POZITIF,
+    B_NEGATIF,
+    AB_POZITIF,
+    AB_EGATIF,
+    O_POZITIF,
+    O_NEGATIF,
     
-    private final String displayName;
-    
-    UserBloodType(String displayName) {
-        this.displayName = displayName;
-    }
-    
-    @Override
-    public String toString() {
-        return displayName;
-    }
+   
 }

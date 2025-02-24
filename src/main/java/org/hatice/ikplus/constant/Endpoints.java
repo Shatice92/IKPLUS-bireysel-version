@@ -19,6 +19,8 @@ public class Endpoints {
 	public static final String ROLE = ROOT + "/role";
 	public static final String COMMENT = ROOT + "/comment";
 	public static final String NOTIFICATION = ROOT + "/notification";
+	public static final String BLOOD_TYPES = ROOT+"/blood-types";
+	public static final String CONTACT = ROOT + "/contact";
 	
 	
 	// Admin rolü için
@@ -79,6 +81,7 @@ public class Endpoints {
 	public static final String ACTIVATESTATUS = "/activate/{id}";
 	public static final String DEACTIVATESTATUS = "/deactivate/{id}";
 	public static final String GETBYCOMPANYID = "/get-by-company-id/{companyId}";
+	public static final String GETBYEMPLOYEEID = "/get-by-employee-id/{employeeId}";
 	public static final String FINDBYID = "/find-by-id/{id}";
 	public static final String GET_PROFILE_BY_TOKEN = "/get-profile-by-token";
 	public static final String UPDATE_STATUS = "/update-status";
@@ -95,10 +98,12 @@ public class Endpoints {
 	public static final String LOGIN = "/login";
 	public static final String ASSIGNROLE = "/assign-role";
 	public static final String UPDATEUSER = "/update-user/{id}";
+	public static final String UPDATE_USER_PROFILE = "/update-user-profile";
 	
 	
 	
-	public static final String CONTACT = ROOT + "/contact";
+	
+	
 	
 	
 }

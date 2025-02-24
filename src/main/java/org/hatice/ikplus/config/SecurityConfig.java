@@ -32,7 +32,8 @@ public class SecurityConfig {
 		    .csrf(csrf -> csrf.disable()) // ✅ CSRF'yi devre dışı bırak
 		    .authorizeHttpRequests(req -> req
 				    // Register ve Login işlemleri için herkese açık izin
-				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login","/v1/dev/user/get-profile-by-token")
+				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login","/v1/dev/user/get-profile-by-token",
+				                     "/v1/dev/user/update-user-profile","/v1/dev/user/update-status","/v1/dev/blood-types")
 				    .permitAll()
 				    
 				    // Admin, Company Manager, Employee gibi özel roller için yetkilendirme

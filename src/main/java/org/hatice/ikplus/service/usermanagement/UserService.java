@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
+import org.hatice.ikplus.dto.request.userrequest.UserUpdateRequestDto;
 import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
@@ -118,29 +119,37 @@ public class UserService {
 	}
 	
 	
-	@Transactional
-	public boolean updateUserStatus(String status, String token) {
-		// Token doğrulaması yapılır
-		var tokenInfo = jwtManager.validateToken(token);
-		if (tokenInfo.isEmpty()) {
-			throw new IKPlusException(ErrorType.INVALID_TOKEN);
+	public boolean updateUserStatus(UserStatus status, UUID authId) {
+		
+		// Kullanıcıyı UUID ile bul
+		Optional<User> userOpt = userRepository.findByAuthId(authId);
+		
+		if (userOpt.isEmpty()) {
+			return false;  // Kullanıcı bulunamadı
 		}
 		
-		// Token'den alınan kullanıcı id'sine göre kullanıcıyı buluruz
-		User user = userRepository.findByAuthId(tokenInfo.get().getAuthId())
-		                          .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı!"));
+		User user = userOpt.get();
 		
-		// Status geçerli mi kontrol edelim
-		try {
-			UserStatus newStatus = UserStatus.valueOf(status.toUpperCase());
-			user.setStatus(newStatus);
-			userRepository.save(user);
-			return true;
-		}
-		catch (IllegalArgumentException e) {
-			throw new RuntimeException("Geçersiz durum değeri: " + status, e);
-		}
+		// Durum bilgisini güncelle
+		user.setStatus(status);
+		
+		// Kullanıcıyı kaydet
+		userRepository.save(user);
+		
+		return true;  // Durum başarıyla güncellendi
 	}
 	
 	
+	
+	@Transactional
+	public boolean updateUserProfile(User user) {
+		try {
+			userRepository.save(user);
+			return true;
+		} catch (Exception e) {
+			// Güncelleme sırasında hata oluşursa logla
+			System.err.println("Profil güncellenirken hata oluştu: " + e.getMessage());
+			return false;
+		}
+	}
 }
