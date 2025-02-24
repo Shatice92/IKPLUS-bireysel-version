@@ -19,9 +19,8 @@ public class Endpoints {
 	public static final String ROLE = ROOT + "/role";
 	public static final String COMMENT = ROOT + "/comment";
 	public static final String NOTIFICATION = ROOT + "/notification";
-	
-	
-	
+	public static final String BLOOD_TYPES = ROOT+"/blood-types";
+	public static final String CONTACT = ROOT + "/contact";
 	
 	
 	// Admin rolü için
@@ -32,16 +31,10 @@ public class Endpoints {
 	public static final String ADMIN_SUBSCRIPTION = ADMIN + "/subscription";
 	public static final String ADMIN_LEAVE_TYPES = ADMIN + "/leave-types";
 	public static final String ADMIN_ROLE = ADMIN + "/role";
-	public static final String ADMIN_SAVE_USER = ADMIN + "/save-user";
-	public static final String ADMIN_GET_ALL_USERS =ADMIN + "/get-all-users";
-	public static final String ADMIN_UPDATE_USER =ADMIN + "/update-user/{id}";
-	public static final String ADMIN_FIND_BY_ID =ADMIN + "/find-by-id/{id}";
-	
-	
-	
-	
-	
-	
+	public static final String SAVE_USER = ADMIN + "/save-user";
+	public static final String GET_ALL_USERS = ADMIN + "/get-all-users";
+	public static final String UPDATE_USER = ADMIN + "/update-user/{id}";
+	public static final String FIND_BY_ID = ADMIN + "/find-by-id/{id}";
 	
 	
 	// Şirket Yöneticisi rolü için
@@ -74,7 +67,6 @@ public class Endpoints {
 	public static final String WEBSITE_MEMBER_NOTIFICATION = WEBSITE_MEMBER + "/notification";
 	
 	
-	
 	// CRUD İşlemleri
 	public static final String SAVE = "/save";
 	public static final String UPDATE = "/update/{id}";
@@ -89,7 +81,10 @@ public class Endpoints {
 	public static final String ACTIVATESTATUS = "/activate/{id}";
 	public static final String DEACTIVATESTATUS = "/deactivate/{id}";
 	public static final String GETBYCOMPANYID = "/get-by-company-id/{companyId}";
+	public static final String GETBYEMPLOYEEID = "/get-by-employee-id/{employeeId}";
 	public static final String FINDBYID = "/find-by-id/{id}";
+	public static final String GET_PROFILE_BY_TOKEN = "/get-profile-by-token";
+	public static final String UPDATE_STATUS = "/update-status";
 	
 	
 	//kontrol et
@@ -103,6 +98,11 @@ public class Endpoints {
 	public static final String LOGIN = "/login";
 	public static final String ASSIGNROLE = "/assign-role";
 	public static final String UPDATEUSER = "/update-user/{id}";
+	public static final String UPDATE_USER_PROFILE = "/update-user-profile";
+	
+	
+	
+	
 	
 	
 	

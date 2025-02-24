@@ -3,11 +3,11 @@ package org.hatice.ikplus.controller.usermanagement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.constant.Endpoints;
-import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
-import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
-import org.hatice.ikplus.dto.request.userrequest.SaveUserRequestDto;
+import org.hatice.ikplus.dto.request.userrequest.*;
 import org.hatice.ikplus.dto.response.BaseResponse;
+import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.dto.response.userresponse.LoginResponseDto;
+import org.hatice.ikplus.dto.response.userresponse.UserProfileResponse;
 import org.hatice.ikplus.dto.response.userresponse.UserResponse;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.enums.RoleName;
@@ -42,6 +42,9 @@ public class UserController {
 		                                     .message("Üyelik Başarıyla Oluşturuldu.").success(true).build());
 	}
 	
+	
+
+	
 	@PostMapping(LOGIN)
 	public ResponseEntity<BaseResponse<LoginResponseDto>> login(@RequestBody @Valid LoginRequestDto dto) {
 		// UserService'ten login fonksiyonunu çağırıyoruz
@@ -54,45 +57,166 @@ public class UserController {
 	}
 	
 	
-	@PostMapping(ADMIN_SAVE_USER)
-	public ResponseEntity<BaseResponse<Boolean>> save(@RequestBody @Valid SaveUserRequestDto dto) {
-		userService.save(dto);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder().code(200).data(true)
-		                                     .message("User Başarıyla Kaydedildi.").success(true).build());
-	}
-	
-	@GetMapping(ADMIN_GET_ALL_USERS)
-	public ResponseEntity<BaseResponse<List<VwUser>>> getAllUsers() {
-		return ResponseEntity.ok(BaseResponse.<List<VwUser>>builder().code(200).data(userService.getAllUsers())
-		                                     .message("Kullanıcılar Başarıyla Getirildi.").success(true).build());
-	}
-	
-	@GetMapping(ADMIN_FIND_BY_ID )
-	public ResponseEntity<BaseResponse<User>> findById(@PathVariable Long id) {
-		User user = userService.findById(id).orElseThrow(() -> new IKPlusException(ErrorType.USER_NOT_FOUND));
-		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user)
-		                                     .message("Kullanıcı Başarıyla Bulundu.").success(true).build());
-	}
-	
-	
-	@PutMapping(ADMIN_UPDATE_USER)
-	public ResponseEntity<BaseResponse<UserResponse>> updateUserRole(@PathVariable Long id,
-	                                                                 @RequestParam RoleName newRoleName) {
-		UserResponse userResponse = userService.updateUserRole(id, newRoleName);
-		// Başarılı yanıt döndürüyoruz
-		return ResponseEntity.ok(BaseResponse.<UserResponse>builder().code(200)
-		                                     .message("User role successfully updated").data(userResponse).success(true)
-		                                     .build());
-	}
-	
-	
 	public ResponseEntity<BaseResponse<User>> findUserByAuthId(@PathVariable UUID id) {
 		Optional<User> optionalUser = userService.findByAuthId(id);
 		if (optionalUser.isEmpty()) throw new IKPlusException(ErrorType.USER_NOT_FOUND);
 		User user = optionalUser.get();
 		
-		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user)
+		return ResponseEntity.ok(BaseResponse.<User>builder().code(200).data(user).message("User found successfully")
+		                                     .success(true).build());
+	}
+	
+	// Kullanıcı bilgilerini token ile al
+	@GetMapping(GET_PROFILE_BY_TOKEN)
+	public ResponseEntity<BaseResponse<UserProfileResponse>> getProfileByToken(@RequestHeader("Authorization") String authorizationHeader) {
+		// Authorization header'ından token'ı al
+		String token = authorizationHeader.replace("Bearer ", "");
+		
+		// Token ile kullanıcı bilgilerini al
+		Optional<TokenInfo> tokenInfoOpt = userService.getUserProfileByToken(token);
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Geçersiz token
+		}
+		
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		Optional<User> userOpt = userService.findByAuthId(tokenInfo.getAuthId());
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Kullanıcı bulunamadı
+		}
+		
+		User user = userOpt.get();
+		UserProfileResponse userProfileResponse =
+				new UserProfileResponse(user.getFirstName(), user.getLastName(), user.getEmail(), user.getGender(),
+				                        user.getPhoneNumber(), user.getBirthDate(), user.getMaritalStatus(),
+				                        user.getBloodType(), user.getIdentificationNumber(), user.getNationality(),
+				                        user.getEducationLevel(), user.getStatus());
+		
+		return ResponseEntity.ok(BaseResponse.<UserProfileResponse>builder().code(200).data(userProfileResponse)
 		                                     .message("User found successfully").success(true).build());
+	}
+	
+	
+	@PutMapping(UPDATE_STATUS)
+	public ResponseEntity<BaseResponse<Boolean>> updateUserStatus(
+			@RequestBody UserStatusRequestDto request,
+			@RequestHeader("Authorization") String token) {
+		
+		// Token'ı alıp, kullanıcı bilgilerini doğruluyoruz
+		String userToken = token.replace("Bearer ", "");
+		Optional<TokenInfo> tokenInfoOpt = userService.getUserProfileByToken(userToken);
+		
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(403)
+			                                       .data(false)
+			                                       .message("Geçersiz token!")
+			                                       .success(false)
+			                                       .build());
+		}
+		
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		
+		// Kullanıcıyı token üzerinden buluyoruz
+		Optional<User> userOpt = userService.findByAuthId(tokenInfo.getAuthId());
+		
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(404)
+			                                       .data(false)
+			                                       .message("Kullanıcı bulunamadı!")
+			                                       .success(false)
+			                                       .build());
+		}
+		
+		User user = userOpt.get();
+		
+		// Kullanıcı durumunu güncellerken sadece geçerli kullanıcıyı hedefliyoruz
+		boolean isUpdated = userService.updateUserStatus(request.status(), user.getAuthId());
+		
+		if (isUpdated) {
+			return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+			                                     .code(200)
+			                                     .data(true)
+			                                     .message("Durum başarıyla güncellendi")
+			                                     .success(true)
+			                                     .build());
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(400)
+			                                       .data(false)
+			                                       .message("Durum güncellenirken bir hata oluştu. Kullanıcı bulunamadı veya işlem başarısız oldu.")
+			                                       .success(false)
+			                                       .build());
+		}
+	}
+	
+	
+	
+	@PutMapping(UPDATE_USER_PROFILE)
+	public ResponseEntity<BaseResponse<Boolean>> updateUserProfile(
+			@RequestBody UserUpdateRequestDto userDTO,
+			@RequestHeader("Authorization") String token) {
+		
+		// Token ile kullanıcı bilgilerini al
+		String userToken = token.replace("Bearer ", "");
+		Optional<TokenInfo> tokenInfoOpt = userService.getUserProfileByToken(userToken);
+		
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(403)
+			                                       .data(false)
+			                                       .message("Geçersiz token!")
+			                                       .success(false)
+			                                       .build());
+		}
+		
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		Optional<User> userOpt = userService.findByAuthId(tokenInfo.getAuthId());
+		
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(404)
+			                                       .data(false)
+			                                       .message("Kullanıcı bulunamadı!")
+			                                       .success(false)
+			                                       .build());
+		}
+		
+		User user = userOpt.get();
+		user.setGender(userDTO.gender() != null ? userDTO.gender() : user.getGender());
+		user.setPhoneNumber(userDTO.phoneNumber() != null ? userDTO.phoneNumber() : user.getPhoneNumber());
+		user.setBirthDate(userDTO.birthDate() != null ? userDTO.birthDate() : user.getBirthDate());
+		user.setMaritalStatus(userDTO.maritalStatus() != null ? userDTO.maritalStatus() : user.getMaritalStatus());
+		user.setBloodType(userDTO.bloodType() != null ? userDTO.bloodType() : user.getBloodType());
+		user.setIdentificationNumber(userDTO.identificationNumber() != null ? userDTO.identificationNumber() : user.getIdentificationNumber());
+		user.setNationality(userDTO.nationality() != null ? userDTO.nationality() : user.getNationality());
+		user.setEducationLevel(userDTO.educationLevel() != null ? userDTO.educationLevel() : user.getEducationLevel());
+		user.setStatus(userDTO.status() != null ? userDTO.status() : user.getStatus());
+		
+		// Kullanıcıyı güncelleme işlemi
+		boolean isUpdated = userService.updateUserProfile(user);
+		
+		if (isUpdated) {
+			return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+			                                     .code(200)
+			                                     .data(true)
+			                                     .message("Profil başarıyla güncellendi.")
+			                                     .success(true)
+			                                     .build());
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+			                     .body(BaseResponse.<Boolean>builder()
+			                                       .code(500)
+			                                       .data(false)
+			                                       .message("Profil güncellenirken bir hata oluştu.")
+			                                       .success(false)
+			                                       .build());
+		}
 	}
 	
 	

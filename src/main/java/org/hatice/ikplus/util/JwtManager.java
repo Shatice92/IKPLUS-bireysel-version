@@ -32,7 +32,8 @@ public class JwtManager {
 		SECRET_KEY = this.secretKey;
 		ISSUER = this.issuer;
 	}
-	private final long EXTIME = 1000L * 60 * 15; // 15 dakika
+	
+	private final long EXTIME = 1000L * 60 * 45; // 45 dakika
 	
 	public String createToken(UUID authId, Role role) {
 		Algorithm algorithm = Algorithm.HMAC512(SECRET_KEY);
@@ -42,18 +43,12 @@ public class JwtManager {
 		// Role enum'unun string karşılığını al
 		String roleName = role.getName().name();
 		
-		return JWT.create()
-		          .withJWTId(UUID.randomUUID().toString())  // Her token benzersiz olur
-		          .withIssuer(ISSUER)
-		          .withIssuedAt(creationDate)
-		          .withExpiresAt(expirationDate)
+		return JWT.create().withJWTId(UUID.randomUUID().toString())  // Her token benzersiz olur
+		          .withIssuer(ISSUER).withIssuedAt(creationDate).withExpiresAt(expirationDate)
 		          .withClaim("authId", authId.toString()) // UUID'yi String olarak ekle
 		          .withClaim("role", roleName)  // Rolü ekle
 		          .sign(algorithm);
 	}
-	
-	
-	
 	
 	
 	public Optional<TokenInfo> validateToken(String token) {
@@ -71,8 +66,10 @@ public class JwtManager {
 			RoleName role = RoleName.valueOf(roleString); // String → Enum dönüşümü
 			
 			return Optional.of(new TokenInfo(authId, role));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Optional.empty();
 		}
 	}
+	
 }

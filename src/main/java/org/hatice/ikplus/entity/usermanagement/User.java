@@ -1,5 +1,6 @@
 package org.hatice.ikplus.entity.usermanagement;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class User {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	@Column(unique = true,nullable = false)
+	@Column(unique = true)
 	private String email;
 	private String password;
 	@Enumerated(EnumType.STRING)
@@ -33,7 +34,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserGender gender;
 	private String phoneNumber;
-	private Date birthDate;
+	private LocalDate birthDate;
 	@Enumerated(EnumType.STRING)
 	private UserMaritalStatus maritalStatus;
 	@Enumerated(EnumType.STRING)
@@ -45,6 +46,6 @@ public class User {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private Long employeeId;
-	@Column(nullable = false, unique = true, updatable = false)
+	@Column( unique = true, updatable = false)
 	private UUID authId = UUID.randomUUID();  // Kullanıcının benzersiz authId'si
 }
