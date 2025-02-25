@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 	USER_NOT_FOUND(1001, "User not found", HttpStatus.NOT_FOUND),
 	EMPLOYEE_NOT_FOUND(2001, "Employee not found", HttpStatus.NOT_FOUND),
+	EMPLOYEEDOCUMENT_NOT_FOUND(2001, "Employee not found", HttpStatus.NOT_FOUND),
 	USERLIST_EMPTY(1002, "UserList is Empty", HttpStatus.NOT_FOUND),
 	EMPLOYEELIST_EMPTY(2002, "EmployeeList is Empty", HttpStatus.NOT_FOUND),
 	VALIDATION_ERROR(400,"Validation Errors, Please check validation rules",HttpStatus.BAD_REQUEST),
