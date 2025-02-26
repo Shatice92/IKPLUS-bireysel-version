@@ -21,6 +21,7 @@ public class Endpoints {
 	public static final String ROLE = ROOT + "/role";
 	public static final String COMMENT = ROOT + "/comment";
 	public static final String NOTIFICATION = ROOT + "/notification";
+	public static final String DASHBOARD = "/dashboard";
 
 	public static final String BLOOD_TYPES = ROOT+"/blood-types";
 	public static final String CONTACT = ROOT + "/contact";
@@ -103,14 +104,10 @@ public class Endpoints {
 	public static final String UPDATEUSER = "/update-user/{id}";
 
 	public static final String VERIFY = "/verify/{authId}";
-	public static final String PASSWORD_REQUEST = PASSWORD + "/request";
-	public static final String PASSWORD_RESET = PASSWORD + "/reset";
+	public static final String PASSWORD_REQUEST =  "/request";
+	public static final String PASSWORD_RESET =  "/reset";
 
 	public static final String UPDATE_USER_PROFILE = "/update-user-profile";
-	
-	
-	
-
 	
 	
 	

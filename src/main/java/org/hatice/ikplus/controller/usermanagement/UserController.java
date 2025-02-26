@@ -3,6 +3,7 @@ package org.hatice.ikplus.controller.usermanagement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.hatice.ikplus.entity.usermanagement.Role;
 import org.hatice.ikplus.repository.usermanagement.AuthorizationRepository;
 import org.hatice.ikplus.dto.request.userrequest.LoginRequestDto;
 import org.hatice.ikplus.dto.request.userrequest.RegisterRequestDto;
@@ -22,8 +23,10 @@ import org.hatice.ikplus.enums.RoleName;
 import org.hatice.ikplus.enums.UserStatus;
 import org.hatice.ikplus.exception.ErrorType;
 import org.hatice.ikplus.exception.IKPlusException;
+import org.hatice.ikplus.service.usermanagement.RoleService;
 import org.hatice.ikplus.service.usermanagement.UserService;
 import org.hatice.ikplus.view.userview.VwUser;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +45,7 @@ public class UserController {
 	private final UserService userService;
 	private final AuthorizationRepository authorizationRepository;
 	private final org.hatice.ikplus.repository.usermanagement.UserRepository userRepository;
+	private final RoleService roleService;
 	
 	@PostMapping(REGISTER)
 	public ResponseEntity<BaseResponse<Boolean>> registerUser(@RequestBody @Valid RegisterRequestDto dto) {
@@ -247,6 +251,31 @@ public class UserController {
 		return ResponseEntity.ok()
 		                     .header("Content-Type", "text/html")
 		                     .body(successHtml);
+	}
+	@GetMapping(DASHBOARD)
+	public ResponseEntity<BaseResponse<RoleName>> getUserRole(@RequestHeader("Authorization") String authorizationHeader) {
+		// Authorization header'ından token'ı al
+		String token = authorizationHeader.replace("Bearer ", "");
+		
+		// Token ile kullanıcı bilgilerini al
+		Optional<TokenInfo> tokenInfoOpt = userService.getUserProfileByToken(token);
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Geçersiz token
+		}
+		
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		Optional<User> userOpt = userService.findByAuthId(tokenInfo.getAuthId());
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		User user = userOpt.get();
+		
+		Optional<Role> byId = roleService.findById(user.getRoleId());
+		RoleName role = byId.get().getName();
+		
+		return ResponseEntity.ok(BaseResponse.<RoleName>builder().code(200).data(role)
+		                                     .message("Kullanıcı rolü başarıyla alındı").success(true).build());
 	}
 	
 	

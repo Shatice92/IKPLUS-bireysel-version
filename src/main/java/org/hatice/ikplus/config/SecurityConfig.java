@@ -37,7 +37,8 @@ public class SecurityConfig {
 				    // Register ve Login işlemleri için herkese açık izin
 
 				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login","/v1/dev/user/get-profile-by-token",
-				                     "/v1/dev/user/update-user-profile","/v1/dev/user/update-status","/v1/dev/blood-types","/v1/dev/user/verify/**","/v1/dev/password/**")
+				                     "/v1/dev/user/update-user-profile","/v1/dev/user/update-status","/v1/dev/blood" +
+						                     "-types","/v1/dev/user/verify/**","/v1/dev/password/**","/v1/dev/user/dashboard","/v1/dev/password/request")
 
 				    .permitAll()
 				    
@@ -60,7 +61,6 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("*"));
 		configuration.setAllowedOrigins(List.of("http://localhost:3000")); // ✅ FRONTEND DOMAINİNİ EKLE
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));

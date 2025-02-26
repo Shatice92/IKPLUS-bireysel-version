@@ -58,8 +58,10 @@ public class UserService {
 	
 	
 	public void register(@Valid RegisterRequestDto dto) {
+		String encodedPassword = passwordEncoder.encode(dto.password());
 		// RoleService'i parametre olarak geçiriyoruz
 		User user = userMapper.fromRegisterDto(dto, roleService);
+		user.setPassword(encodedPassword);
 		userRepository.save(user);
 		
 		// Create authorization entry
