@@ -3,6 +3,8 @@ package org.hatice.ikplus.dto.request.userrequest;
 import org.hatice.ikplus.enums.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 public record UserUpdateRequestDto(
 		UserGender gender,
@@ -13,6 +15,7 @@ public record UserUpdateRequestDto(
 		String identificationNumber,
 		String   nationality,
 		UserEducationLevel educationLevel,
-		UserStatus status
+		UserStatus status,
+		LocalDateTime updatedAt
 ) {
 }

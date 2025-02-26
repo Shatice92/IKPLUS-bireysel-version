@@ -29,8 +29,9 @@ public interface UserMapper {
 	@Mapping(target = "roleId", expression = "java(roleService.findRoleIdByName(org.hatice.ikplus.enums.RoleName.WEBSITE_MEMBER))")
 	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);  // RoleService parametre olarak alındı
 	
-	
+	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	User fromUserUpdateRequestDto(UserUpdateRequestDto dto);
+	
 	
 	User fromUserStatusRequestDto(UserStatusRequestDto dto);
 	
