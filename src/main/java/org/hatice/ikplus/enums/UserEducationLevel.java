@@ -1,6 +1,6 @@
 package org.hatice.ikplus.enums;
 
 public enum UserEducationLevel {
-    PRIMARYSCHOOL, HIGHSCHOOL , UNIVERSITY , MASTERSDEGREE, PHDOCTORATE
+    ILKOKUL, ORTAOKUL,LISE , UNIVERSITE , YUKSEK_LISANS
     //İlkokul, Lise, Üniversite,Yüksek Lisans, Doktora
 }
