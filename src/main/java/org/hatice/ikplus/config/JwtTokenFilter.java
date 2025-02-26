@@ -10,6 +10,7 @@ import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.enums.RoleName;
 import org.hatice.ikplus.util.JwtManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,14 +27,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@Component  // Eğer @Service değilse @Component olmalı
+@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 	
 	private final JwtManager jwtManager;
 	private final JwtUserDetails jwtUserDetails;
 	
 	@Autowired
-	public JwtTokenFilter(JwtManager jwtManager, JwtUserDetails jwtUserDetails) {
+	public JwtTokenFilter(JwtManager jwtManager, @Lazy JwtUserDetails jwtUserDetails) {
 		this.jwtManager = jwtManager;
 		this.jwtUserDetails = jwtUserDetails;
 	}
@@ -43,57 +44,43 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		log.info("JwtTokenFilter doFilterInternal çalıştı...");
 		
-		// Eğer istek login endpoint'ine geliyorsa, token kontrolü yapma
 		if (request.getRequestURI().equals("/v1/dev/user/login")) {
-			filterChain.doFilter(request, response);  // token kontrolü atlanır
+			filterChain.doFilter(request, response);
 			return;
 		}
 		
-		// Header'dan gelen authorization bilgisini alıyoruz
 		String authorizationHeader = request.getHeader("Authorization");
 		log.debug("Gelen Authorization Header: {}", authorizationHeader);
 		
-		// Token kontrolü yapıyoruz
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			String token = authorizationHeader.substring(7);
 			log.debug("Extracted Token: {}", token);
 			
-			// Token'ı doğrulayıp TokenInfo alıyoruz
 			Optional<TokenInfo> tokenInfoOptional = jwtManager.validateToken(token);
-			if (!tokenInfoOptional.isPresent()) {
+			if (tokenInfoOptional.isEmpty()) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				response.getWriter().write("Geçersiz token");
 				return;
 			}
-			if (tokenInfoOptional.isPresent()) {
-				TokenInfo tokenInfo = tokenInfoOptional.get();
-				UUID authId = tokenInfo.getAuthId();
-				RoleName role = tokenInfo.getRole();
-				log.debug("Tokenden alınan authId: {}, Rol: {}", authId, role);
-				
-				// Kullanıcı bilgilerini yükleme işlemi
-				UserDetails userDetails = jwtUserDetails.loadUserById(authId);
-				
-				// Kullanıcının rolünü doğruluyoruz
-				List<GrantedAuthority> authorities = new ArrayList<>();
-				authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-				
-				// Token doğrulandıysa, authentication token oluşturuyoruz
-				UsernamePasswordAuthenticationToken authenticationToken =
-						new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-				
-				// Güvenlik bağlamını ayarlıyoruz
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-			}
-			else {
-				log.error("Geçersiz token");
-			}
-		}
-		else {
+			
+			TokenInfo tokenInfo = tokenInfoOptional.get();
+			UUID authId = tokenInfo.getAuthId();
+			RoleName role = tokenInfo.getRole();
+			log.debug("Tokenden alınan authId: {}, Rol: {}", authId, role);
+			
+			UserDetails userDetails = jwtUserDetails.loadUserById(authId);
+			
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+			
+			UsernamePasswordAuthenticationToken authenticationToken =
+					new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+			
+			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+		} else {
 			log.warn("Authorization header'ı 'Bearer ' ile başlamıyor.");
 		}
 		
-		// FilterChain'e devam ediyoruz
 		filterChain.doFilter(request, response);
 	}
 }

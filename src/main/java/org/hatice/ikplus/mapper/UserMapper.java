@@ -15,8 +15,10 @@ import org.mapstruct.ReportingPolicy;
 public interface UserMapper {
 	
 	// SaveUserRequestDto'dan User'a dönüşüm
+
 	@Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
 	@Mapping(target = "authId", expression = "java(java.util.UUID.randomUUID())")
+
 	@Mapping(target = "status", constant = "INACTIVE")
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	User fromSaveUserDto(SaveUserRequestDto dto);

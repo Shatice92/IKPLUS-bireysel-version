@@ -24,8 +24,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByAuthId(UUID authId);
 	
+
+	Optional<User> findByResetToken(String resetToken);
+	
+	
+
 	@Modifying
 	@Transactional
 	@Query("UPDATE User u SET u.status = :status WHERE u.authId = :authId")
 	int updateUserStatus(UserStatus status, UUID authId);
+
 }

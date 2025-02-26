@@ -48,4 +48,6 @@ public class User {
 	private Long employeeId;
 	@Column( unique = true, updatable = false)
 	private UUID authId = UUID.randomUUID();  // Kullanıcının benzersiz authId'si
+	private String resetToken; // şifre sıfırlama işlemleri için gerekli
+	private LocalDateTime resetTokenExpiration;
 }

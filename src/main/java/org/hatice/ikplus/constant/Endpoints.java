@@ -6,6 +6,8 @@ public class Endpoints {
 	public static final String API = "/api";
 	public static final String DEVELOPER = "/dev";
 	public static final String ROOT = VERSION + DEVELOPER;
+	public static final String PASSWORD = ROOT + "/password";
+	
 	
 	// Yeni Roller ile ilgili endpointler
 	public static final String ADMIN = ROOT + "/admin"; // ADMIN rolü için
@@ -19,9 +21,10 @@ public class Endpoints {
 	public static final String ROLE = ROOT + "/role";
 	public static final String COMMENT = ROOT + "/comment";
 	public static final String NOTIFICATION = ROOT + "/notification";
+
 	public static final String BLOOD_TYPES = ROOT+"/blood-types";
 	public static final String CONTACT = ROOT + "/contact";
-	
+
 	
 	// Admin rolü için
 	public static final String ADMIN_COMPANIES = ADMIN + "/companies";
@@ -96,10 +99,18 @@ public class Endpoints {
 	
 	public static final String REGISTER = "/register";
 	public static final String LOGIN = "/login";
-	public static final String DASHBOARD = "/dashboard";
 	public static final String ASSIGNROLE = "/assign-role";
 	public static final String UPDATEUSER = "/update-user/{id}";
+
+	public static final String VERIFY = "/verify/{authId}";
+	public static final String PASSWORD_REQUEST = PASSWORD + "/request";
+	public static final String PASSWORD_RESET = PASSWORD + "/reset";
+
 	public static final String UPDATE_USER_PROFILE = "/update-user-profile";
+	
+	
+	
+
 	
 	
 	
