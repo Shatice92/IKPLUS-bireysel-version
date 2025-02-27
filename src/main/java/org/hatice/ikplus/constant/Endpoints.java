@@ -25,6 +25,7 @@ public class Endpoints {
 
 	public static final String BLOOD_TYPES = ROOT+"/blood-types";
 	public static final String CONTACT = ROOT + "/contact";
+	public static final String LEAVES = ROOT + "/leaves";
 
 	
 	// Admin rolü için
