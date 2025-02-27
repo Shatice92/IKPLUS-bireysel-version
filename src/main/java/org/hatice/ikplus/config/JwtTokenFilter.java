@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.enums.RoleName;
@@ -17,14 +16,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -44,10 +39,23 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		log.info("JwtTokenFilter doFilterInternal çalıştı...");
 		
-		if (request.getRequestURI().equals("/v1/dev/user/login")) {
+		
+		String requestURI = request.getRequestURI();
+		
+		
+		List<String> openEndpoints = Arrays.asList(
+				"/v1/dev/user/login",
+				"/v1/dev/user/register",
+				"/v1/dev/password/request",
+				"/v1/dev/password/reset", "/reset-password.html"  // Statik sayfaya erişimi de serbest bırak
+		);
+		
+		
+		if (openEndpoints.contains(requestURI)) {
 			filterChain.doFilter(request, response);
 			return;
 		}
+		
 		
 		String authorizationHeader = request.getHeader("Authorization");
 		log.debug("Gelen Authorization Header: {}", authorizationHeader);
