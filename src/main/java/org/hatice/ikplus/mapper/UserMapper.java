@@ -29,7 +29,7 @@ public interface UserMapper {
 	@Mapping(target = "authId", expression = "java(java.util.UUID.randomUUID())") // authId ekleniyor
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	@Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
-	@Mapping(target = "roleId", expression = "java(roleService.findRoleIdByName(org.hatice.ikplus.enums.RoleName.WEBSITE_MEMBER))")
+	@Mapping(target = "roleId", expression = "java(roleService.findRoleIdByName(org.hatice.ikplus.enums.RoleName.EMPLOYEE))")
 	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);  // RoleService parametre olarak alındı
 	
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")

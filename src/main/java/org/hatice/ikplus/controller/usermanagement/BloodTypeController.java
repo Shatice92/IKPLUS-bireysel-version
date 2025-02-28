@@ -1,8 +1,7 @@
-package org.hatice.ikplus.controller;
+package org.hatice.ikplus.controller.usermanagement;
 
 import org.hatice.ikplus.constant.Endpoints;
 import org.hatice.ikplus.dto.response.BaseResponse;
-import org.hatice.ikplus.dto.response.userresponse.UserProfileResponse;
 import org.hatice.ikplus.enums.UserBloodType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

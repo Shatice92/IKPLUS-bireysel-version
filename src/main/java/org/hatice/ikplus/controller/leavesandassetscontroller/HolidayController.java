@@ -1,4 +1,4 @@
-package org.hatice.ikplus.controller;
+package org.hatice.ikplus.controller.leavesandassetscontroller;
 
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.service.HolidayService;
