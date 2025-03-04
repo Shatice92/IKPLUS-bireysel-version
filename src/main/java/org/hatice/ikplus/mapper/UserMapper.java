@@ -26,11 +26,11 @@ public interface UserMapper {
 	
 	
 	@Mapping(target = "status", constant = "INACTIVE")
-	@Mapping(target = "authId", expression = "java(java.util.UUID.randomUUID())") // authId ekleniyor
+	@Mapping(target = "authId", expression = "java(java.util.UUID.randomUUID())")
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	@Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
 	@Mapping(target = "roleId", expression = "java(roleService.findRoleIdByName(org.hatice.ikplus.enums.RoleName.EMPLOYEE))")
-	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);  // RoleService parametre olarak alındı
+	User fromRegisterDto(RegisterRequestDto dto, RoleService roleService);
 	
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	User fromUserUpdateRequestDto(UserUpdateRequestDto dto);

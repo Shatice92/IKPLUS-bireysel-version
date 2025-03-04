@@ -30,7 +30,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-		    .csrf(csrf -> csrf.disable()) // ✅ CSRF'yi devre dışı bırak
+		    .csrf(csrf -> csrf.disable())
 		    .authorizeHttpRequests(req -> req
 				    // Register ve Login işlemleri için herkese açık izin
 

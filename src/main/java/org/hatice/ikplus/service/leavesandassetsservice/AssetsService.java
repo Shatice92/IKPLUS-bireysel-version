@@ -13,6 +13,7 @@ import org.hatice.ikplus.repository.leaveandassetrepository.AssetsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,6 +77,20 @@ public class AssetsService {
 		                               .orElseThrow(() -> new IKPlusException(ErrorType.ASSET_NOT_FOUND));
 		
 		asset.setStatus(status);
+		assetsRepository.save(asset);
+	}
+	
+	public void approveAsset(Long id) {
+		Assets asset = assetsRepository.findById(id)
+		                               .orElseThrow(() -> new IKPlusException(ErrorType.ASSET_NOT_FOUND));
+		asset.setStatus(AssetStatus.ACTIVE);
+		assetsRepository.save(asset);
+	}
+	
+	public void rejectAsset(Long id) {
+		Assets asset = assetsRepository.findById(id)
+		                               .orElseThrow(() -> new IKPlusException(ErrorType.ASSET_NOT_FOUND));
+		asset.setStatus(AssetStatus.REFUND);
 		assetsRepository.save(asset);
 	}
 }

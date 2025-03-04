@@ -14,6 +14,7 @@ import org.mapstruct.factory.Mappers;
 public interface AssetMapper {
 	AssetMapper INSTANCE = Mappers.getMapper(AssetMapper.class);
 	
+	@Mapping(target = "status", constant = "INACTIVE")
 	@Mapping(target = "assignedDate", expression = "java(java.time.LocalDateTime.now())")
 	Assets fromCreateAssetRequestDto(CreateAssetRequestDto dto);
 	
