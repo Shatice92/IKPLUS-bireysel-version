@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class AssetResponseDto {
 	private Long id;
 	private Long employeeId;
+	private Long companyManagerId;
 	private String name;
 	private String serialNumber;
 	private LocalDateTime assignedDate;

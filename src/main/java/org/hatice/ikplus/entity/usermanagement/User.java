@@ -46,6 +46,7 @@ public class User {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private Long employeeId;
+	private Long companyManagerId;
 	@Column( unique = true, updatable = false)
 	private UUID authId = UUID.randomUUID();  // Kullanıcının benzersiz authId'si
 	private String resetToken; // şifre sıfırlama işlemleri için gerekli

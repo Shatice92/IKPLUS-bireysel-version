@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CreateAssetRequestDto {
 	private Long employeeId;
+	private Long companyManagerId;
 	private String name;
 	private String serialNumber;
 	private LocalDateTime assignedDate;

@@ -51,6 +51,7 @@ public class Endpoints {
 	public static final String COMPANY_MANAGER_EMPLOYEE_DOCUMENT = COMPANY_MANAGER + "/employee-document";
 	public static final String COMPANY_MANAGER_SETTINGS = COMPANY_MANAGER + "/settings";
 	public static final String COMPANY_MANAGER_NOTIFICATION = COMPANY_MANAGER + "/notification";
+	public static final String COMPANY_MANAGER_ASSETS =COMPANY_MANAGER+"/assets" ;
 	
 	
 	// Personel rolü için

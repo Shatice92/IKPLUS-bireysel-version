@@ -32,12 +32,6 @@ public class AssetsController {
 	private final JwtManager jwtManager;
 	private final UserService userService;
 	
-	@GetMapping(Endpoints.LIST)
-	public ResponseEntity<BaseResponse<List<AssetResponseDto>>> getAllAssets() {
-		return ResponseEntity.ok(BaseResponse.<List<AssetResponseDto>>builder().data(assetsService.findAll())
-		                                     .message("All assets listed successfully.").code(200).success(true)
-		                                     .build());
-	}
 	
 	// TODO bu endpoint sadece employee e açık olacak .
 	@GetMapping(GETBYID)//
@@ -78,46 +72,17 @@ public class AssetsController {
 	}
 	
 	
-	@PostMapping(SAVE)
-	public ResponseEntity<BaseResponse<Boolean>> createAsset(@RequestBody CreateAssetRequestDto dto) {
-		assetsService.save(dto);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder().data(true).message("Asset created successfully.")
-		                                     .code(200).success(true).build());
-	}
-	
-	
-	
-	@DeleteMapping(DELETE)
-	public ResponseEntity<BaseResponse<Boolean>> deleteAsset(@PathVariable Long id) {
-		assetsService.delete(id);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder().data(true).message("Asset deleted successfully.")
-		                                     .code(200).success(true).build());
-	}
-	
-	
-	
-	
-	
-	
 	@PutMapping(APPROVE)
 	public ResponseEntity<BaseResponse<Boolean>> approveAsset(@PathVariable Long id) {
 		assetsService.approveAsset(id);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder()
-		                                     .data(true)
-		                                     .message("Asset approved successfully")
-		                                     .code(200)
-		                                     .success(true)
-		                                     .build());
+		return ResponseEntity.ok(BaseResponse.<Boolean>builder().data(true).message("Asset approved successfully")
+		                                     .code(200).success(true).build());
 	}
 	
 	@PutMapping(REJECT)
 	public ResponseEntity<BaseResponse<Boolean>> rejectAsset(@PathVariable Long id) {
 		assetsService.rejectAsset(id);
-		return ResponseEntity.ok(BaseResponse.<Boolean>builder()
-		                                     .data(true)
-		                                     .message("Asset rejected successfully")
-		                                     .code(200)
-		                                     .success(true)
-		                                     .build());
+		return ResponseEntity.ok(BaseResponse.<Boolean>builder().data(true).message("Asset rejected successfully")
+		                                     .code(200).success(true).build());
 	}
 }

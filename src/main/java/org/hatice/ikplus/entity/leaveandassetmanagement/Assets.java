@@ -29,5 +29,6 @@ public class Assets {
 	@Enumerated(EnumType.STRING )
 	private AssetStatus status;
 	private LocalDateTime dueDate;
+	private Long companyManagerId;
 
 }
