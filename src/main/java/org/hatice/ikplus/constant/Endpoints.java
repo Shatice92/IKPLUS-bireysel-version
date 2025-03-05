@@ -98,6 +98,7 @@ public class Endpoints {
 	public static final String REJECT = "/reject/{id}";
 	public static final String GETEXPENSESBYEMPLOYEEID = "/get-expenses-by-employee/{id}";
 	public static final String GETASSETBYEMPLOYEEID = "/get-asset-by-employeeId";
+	public static final String GETNOTIFICATIONSBYEMPLOYEEID = "/get-notifications-by-employeeId";
 	
 	
 	public static final String REGISTER = "/register";

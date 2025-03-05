@@ -28,7 +28,8 @@ public enum ErrorType {
 	LEAVELIST_EMPTY(6004, "Leavelist is Empty", HttpStatus.NOT_FOUND),
 	AUTHORIZATION_NOT_FOUND(7001, "Authorization not found", HttpStatus.NOT_FOUND),
 	EMAIL_ALREADY_EXISTS(1006, "Email already exists", HttpStatus.BAD_REQUEST),
-	COMPANY_MANAGER_NOT_FOUND(8001, "Company Manager not found", HttpStatus.NOT_FOUND);
+	COMPANY_MANAGER_NOT_FOUND(8001, "Company Manager not found", HttpStatus.NOT_FOUND),
+	NOTIFICATION_NOT_FOUND(9001, "Notifications not found", HttpStatus.NOT_FOUND);
 	
 	
 	int code;

@@ -19,8 +19,11 @@ public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long userId;
+	private Long employeeId;
+	private String title;
 	private String notification;
 	private LocalDateTime createdAt;
+	private Boolean isRead;
+	private String notificationType;
 	
 }
