@@ -19,7 +19,7 @@ public interface EmployeeMapper {
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	Employee fromAddEmployeeRequestDto(AddEmployeeRequestDto dto);
 	
-	@Mapping(target = "userId", source = "dto.userId")
+	
 	void updateEmployeeFromDto(UpdateEmployeeRequestDto dto, @MappingTarget Employee entity);
 	
 	EmployeeResponse toEmployeeResponse(Employee employee);

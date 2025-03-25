@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hatice.ikplus.enums.CompanyStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -25,8 +26,11 @@ public class Company {
 	private String Logo;
 	@Enumerated(EnumType.STRING)
 	private CompanyStatus status;
-	private boolean isApproved;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+	private LocalDateTime applicationDate;
+	private LocalDateTime updatedAt;
+	private Long subscriptionId;
+	private String address;
+	private String phone;
+	private Boolean emailVerified;
 	
 }

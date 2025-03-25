@@ -45,16 +45,16 @@ public class CompanyManagerAssetsController {
 			@RequestBody @Valid CreateAssetRequestDto dto) {
 		
 		
-		// Authorization header'ından token'ı al
+		
 		String token = authorizationHeader.replace("Bearer ", "");
 		
 		// Token'ı doğrula ve authId'yi al
 		Optional<TokenInfo> tokenInfoOpt = jwtManager.validateToken(token);
 		if (tokenInfoOpt.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Geçersiz token
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 		}
 		TokenInfo tokenInfo = tokenInfoOpt.get();
-		// 3. Servis katmanına DTO'yu göndererek kaydetme işlemini başlat
+		
 		assetsService.save(dto,tokenInfo);
 		
 		return ResponseEntity.ok(

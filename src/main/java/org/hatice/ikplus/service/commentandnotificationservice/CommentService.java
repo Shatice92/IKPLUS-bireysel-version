@@ -8,17 +8,22 @@ import org.hatice.ikplus.repository.commentandnotificationrepository.CommentRepo
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 	private final CommentRepository commentRepository;
 	
-	public void save(SaveCommentRequestDto dto) {
-		commentRepository.save(CommentMapper.INSTANCE.fromSaveCommentRequestDto(dto));
+	public Comment save(SaveCommentRequestDto dto) {
+		return commentRepository.save(CommentMapper.INSTANCE.fromSaveCommentRequestDto(dto));
 	}
 	
 	public List<Comment> getAllComments() {
 		return commentRepository.findAll();
+	}
+	
+	public Optional<Comment> indByCompanyIdAndCompanyManagerId(Long companyId, Long companyManagerId) {
+		return commentRepository.findByCompanyIdAndCompanyManagerId(companyId, companyManagerId);
 	}
 }

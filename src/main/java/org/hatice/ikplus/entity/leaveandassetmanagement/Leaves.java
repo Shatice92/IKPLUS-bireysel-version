@@ -24,7 +24,7 @@ public class Leaves {
 	private Long leaveTypeId;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private Long approvedByUserId;
+	private Long companyManagerId;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	@Enumerated(EnumType.STRING)

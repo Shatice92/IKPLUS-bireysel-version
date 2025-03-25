@@ -12,6 +12,7 @@ import org.hatice.ikplus.repository.commentandnotificationrepository.Notificatio
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,14 +20,27 @@ import java.util.stream.Collectors;
 public class NotificationService {
 	private final NotificationRepository notificationRepository;
 	
-	public List<NotificationResponseDto> getNotificationByEmployeeId(Long employeeId) {
-		List<Notification> notifications=notificationRepository.findByEmployeeId(employeeId);
+	public List<NotificationResponseDto> getNotificationByUserId(Long userId) {
+		List<Notification> notifications = notificationRepository.findByUserId(userId);
 		if (notifications.isEmpty()) {
 			throw new IKPlusException(ErrorType.NOTIFICATION_NOT_FOUND);
 		}
-		return notifications.stream()
-		             .map(NotificationMapper.INSTANCE::toNotificationsResponseDto)
-		             .collect(Collectors.toList());
+		return notifications.stream().map(NotificationMapper.INSTANCE::toNotificationsResponseDto)
+		                    .collect(Collectors.toList());
 	}
 	
+	public void notificationMarkAsRead(Long id) {
+		notificationRepository.findById(id).ifPresent(notification -> {
+			notification.setIsRead(true);
+			notificationRepository.save(notification);
+		});
 	}
+	
+	public void deleteNotification(Long id) {
+		Optional<Notification> optionalNotification = notificationRepository.findById(id);
+		if (optionalNotification.isPresent()) {
+			notificationRepository.delete(optionalNotification.get());
+		}
+		
+	}
+}

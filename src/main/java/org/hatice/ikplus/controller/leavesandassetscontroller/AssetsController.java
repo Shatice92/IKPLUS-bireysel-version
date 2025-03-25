@@ -2,11 +2,8 @@ package org.hatice.ikplus.controller.leavesandassetscontroller;
 
 import lombok.RequiredArgsConstructor;
 import org.hatice.ikplus.constant.Endpoints;
-import org.hatice.ikplus.constant.Endpoints.*;
-import org.hatice.ikplus.dto.request.leavesandassetrequest.CreateAssetRequestDto;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.dto.response.TokenInfo;
-import org.hatice.ikplus.dto.response.companyresponse.CompanyResponse;
 import org.hatice.ikplus.dto.response.leavesandassetsresponse.AssetResponseDto;
 import org.hatice.ikplus.entity.usermanagement.User;
 import org.hatice.ikplus.service.leavesandassetsservice.AssetsService;
@@ -15,7 +12,7 @@ import org.hatice.ikplus.util.JwtManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.hatice.ikplus.entity.usermanagement.Authorization;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +30,7 @@ public class AssetsController {
 	private final UserService userService;
 	
 	
-	// TODO bu endpoint sadece employee e açık olacak .
+	
 	@GetMapping(GETBYID)//
 	public ResponseEntity<BaseResponse<AssetResponseDto>> getAssetById(@PathVariable Long id) {
 		return ResponseEntity.ok(BaseResponse.<AssetResponseDto>builder().data(assetsService.findById(id))

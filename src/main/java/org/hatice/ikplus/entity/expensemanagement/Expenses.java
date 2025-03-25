@@ -26,7 +26,8 @@ public class Expenses {
 	private String receipt; // Fatura URL link veya IMAGE linki olcak.
 	@Enumerated(EnumType.STRING)
 	private ExpensesType status;
-	private LocalDate submittedAt; // harcamanın yapıldığı zaman.
-	private Long approvedByUserId;
+	private LocalDate submittedAt;
+	private Long companyId;
+	private Long companyManagerId;
 	private LocalDate updateAt;
 }

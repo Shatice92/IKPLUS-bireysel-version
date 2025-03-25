@@ -22,10 +22,9 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long userId;
 	private Long companyId;
 	private String position;
-	private LocalDate hireDate;
+	private LocalDateTime hireDate;
 	@Enumerated(EnumType.STRING)
 	private EmployeeType status;
 	private LocalDateTime updatedAt;

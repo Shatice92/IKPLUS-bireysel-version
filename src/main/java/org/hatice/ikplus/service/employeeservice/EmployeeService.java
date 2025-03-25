@@ -130,4 +130,8 @@ public class EmployeeService {
 		
 		return employees.stream().map(EmployeeMapper.INSTANCE::toEmployeeResponse).collect(Collectors.toList());
 	}
+	
+	public List<EmployeeResponse> findEmployeesByCompanyId(Long companyId) {
+		return employeeRepository.findEmployeesByCompanyId(companyId);
+	}
 }

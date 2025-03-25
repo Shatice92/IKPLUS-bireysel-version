@@ -45,6 +45,7 @@ public class User {
 	private UserEducationLevel educationLevel;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private String  userImageUrl;
 	private Long employeeId;
 	private Long companyManagerId;
 	@Column( unique = true, updatable = false)

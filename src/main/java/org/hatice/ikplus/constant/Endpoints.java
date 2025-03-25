@@ -52,6 +52,7 @@ public class Endpoints {
 	public static final String COMPANY_MANAGER_SETTINGS = COMPANY_MANAGER + "/settings";
 	public static final String COMPANY_MANAGER_NOTIFICATION = COMPANY_MANAGER + "/notification";
 	public static final String COMPANY_MANAGER_ASSETS =COMPANY_MANAGER+"/assets" ;
+	public static final String COMPANY_MANAGER_EXPENSES =COMPANY_MANAGER+"/expenses" ;
 	
 	
 	// Personel rolü için
@@ -60,6 +61,8 @@ public class Endpoints {
 	public static final String EMPLOYEE_ASSETS = EMPLOYEE + "/assets";
 	public static final String EMPLOYEE_EXPENSES = EMPLOYEE + "/expenses";
 	public static final String EMPLOYEE_NOTIFICATION = EMPLOYEE + "/notification";
+	public static final String EMPLOYEE_SHIFTS = EMPLOYEE+"/shifts";
+	public static final String EMPLOYEE_BREAKS = EMPLOYEE+"/breaks";
 	
 	
 	// Ziyaretçi rolü için
@@ -86,11 +89,13 @@ public class Endpoints {
 	public static final String GETBYROLENAME = "/get-by-role-name/{roleName}";
 	public static final String ACTIVATESTATUS = "/activate/{id}";
 	public static final String DEACTIVATESTATUS = "/deactivate/{id}";
-	public static final String GETBYCOMPANYID = "/get-by-company-id/{companyId}";
+	public static final String GETBYCOMPANYID = "/get-by-companyId";
 	public static final String GETBYEMPLOYEEID = "/get-by-employee-id/{employeeId}";
 	public static final String FINDBYID = "/find-by-id/{id}";
 	public static final String GET_PROFILE_BY_TOKEN = "/get-profile-by-token";
 	public static final String UPDATE_STATUS = "/update-status";
+	public static final String ADD_LEAVE_TYPE = "/add-leave-type";
+	public static final String LIST_LEAVE_TYPES = "/list-leave-types";
 	
 	
 	//kontrol et
@@ -98,6 +103,10 @@ public class Endpoints {
 	public static final String REJECT = "/reject/{id}";
 	public static final String GETEXPENSESBYEMPLOYEEID = "/get-expenses-by-employee/{id}";
 	public static final String GETASSETBYEMPLOYEEID = "/get-asset-by-employeeId";
+	public static final String GETSHIFTBYEMPLOYEEID = "/get-shift-by-employeeId";
+	public static final String GETBREAKBYEMPLOYEEID = "/get-break-by-employeeId";
+	public static final String GETLEAVEIDBYLEAVETYPENAME = "/get-leavetypeId-by-leavetypename";
+	public static final String GETLEAVEBYEMPLOYEEID = "/get-leave-by-employeeId";
 	public static final String GETNOTIFICATIONSBYEMPLOYEEID = "/get-notifications-by-employeeId";
 	
 	
@@ -109,6 +118,7 @@ public class Endpoints {
 	public static final String VERIFY = "/verify/{authId}";
 	public static final String PASSWORD_REQUEST =  "/request";
 	public static final String PASSWORD_RESET =  "/reset";
+	public static final String MARKASREAD =  "/mark-as-read/{id}";
 
 	public static final String UPDATE_USER_PROFILE = "/update-user-profile";
 	

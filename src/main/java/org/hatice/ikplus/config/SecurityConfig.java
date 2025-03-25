@@ -36,7 +36,10 @@ public class SecurityConfig {
 
 				    .requestMatchers("swagger-ui/**", "/v3/api-docs/**", "/v1/dev/user/register", "/v1/dev/user/login", "/v1/dev/user/get-profile-by-token",
 				                     "/v1/dev/user/update-user-profile", "/v1/dev/user/update-status", "/v1/dev/blood" +
-						                     "-types", "/v1/dev/user/verify/**", "/v1/dev/password/reset", "/v1/dev/user/dashboard", "/v1/dev/password/request", "/reset-password.html","/v1/dev/notification/")
+						                     "-types", "/v1/dev/user/verify/**", "/v1/dev/password/reset", "/v1/dev" +
+						                     "/user/dashboard", "/v1/dev/password/request", "/reset-password.html",
+				                     "/v1/dev/notification/mark-as-read","/v1/dev/notification/get-notifications-by" +
+						                     "-employeeId","/v1/dev/comment/list","/v1/dev/notification/delete/","/v1/dev/contact/save")
 
 				    .permitAll()
 				    

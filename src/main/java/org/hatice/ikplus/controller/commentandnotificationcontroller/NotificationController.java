@@ -5,10 +5,7 @@ import org.hatice.ikplus.constant.Endpoints;
 import org.hatice.ikplus.dto.response.BaseResponse;
 import org.hatice.ikplus.dto.response.TokenInfo;
 import org.hatice.ikplus.dto.response.commentandnotificationresponse.NotificationResponseDto;
-import org.hatice.ikplus.dto.response.leavesandassetsresponse.AssetResponseDto;
-import org.hatice.ikplus.entity.commentandnotificationmanagement.Notification;
 import org.hatice.ikplus.entity.usermanagement.User;
-import org.hatice.ikplus.enums.UserBloodType;
 import org.hatice.ikplus.service.commentandnotificationservice.NotificationService;
 import org.hatice.ikplus.service.usermanagement.UserService;
 import org.hatice.ikplus.util.JwtManager;
@@ -20,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.hatice.ikplus.constant.Endpoints.GETNOTIFICATIONSBYEMPLOYEEID;
+import static org.hatice.ikplus.constant.Endpoints.*;
 
 @RestController
 @RequestMapping(Endpoints.NOTIFICATION)
@@ -54,11 +51,53 @@ public class NotificationController {
 		
 		
 		User user = userOpt.get();
-		Long employeeId = user.getEmployeeId();
-		List<NotificationResponseDto> notifications = notificationService.getNotificationByEmployeeId(employeeId);
+		Long userId = user.getId();
+		List<NotificationResponseDto> notifications = notificationService.getNotificationByUserId(userId);
 		return ResponseEntity.ok(BaseResponse.<List<NotificationResponseDto>>builder().data(notifications)
-		                                     .message("Notifications of employee ID " + employeeId + " listed " +
+		                                     .message("Notifications of user ID " + userId + " listed " +
 				                                              "successfully.")
 		                                     .code(200).success(true).build());
 	}
+	
+	
+	@PutMapping(MARKASREAD)
+	public ResponseEntity<BaseResponse<Boolean>> notificationMarkAsRead(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Long id) {
+		String token = authorizationHeader.replace("Bearer ", "");
+		
+		Optional<TokenInfo> tokenInfoOpt = jwtManager.validateToken(token);
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(BaseResponse.<Boolean>builder()
+			                                                                    .code(403)
+			                                                                    .message("Geçersiz token")
+			                                                                    .data(false)
+			                                                                    .build());
+		}
+		
+		notificationService.notificationMarkAsRead(id);
+		return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+		                                     .code(200)
+		                                     .message("Bildirim okundu olarak işaretlendi.")
+		                                     .data(true)
+		                                     .build());
+	}
+	
+	
+	
+	@DeleteMapping(DELETE)
+	public ResponseEntity<BaseResponse<Boolean>> deleteNotification(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Long id) {
+		String token = authorizationHeader.replace("Bearer ", "");
+		Optional<TokenInfo> tokenInfoOpt = jwtManager.validateToken(token);
+		if (tokenInfoOpt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+		}
+		TokenInfo tokenInfo = tokenInfoOpt.get();
+		notificationService.deleteNotification(id);
+		return ResponseEntity.ok(BaseResponse.<Boolean>builder()
+		                                     .code(200)
+		                                     .message("Notification deleted successfully.")
+		                                     .data(true)
+		                                     .build());
+		
+	}
+	
 }

@@ -20,4 +20,10 @@ public class LeaveTypes {
 	@Enumerated(EnumType.STRING)
 	private TypeLeaves leavesName;
 	
+	
+	
+	// Yeni Constructor
+	public LeaveTypes(TypeLeaves leavesName) {
+		this.leavesName = leavesName;
+	}
 }

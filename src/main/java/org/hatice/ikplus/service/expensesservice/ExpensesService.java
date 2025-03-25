@@ -12,6 +12,7 @@ import org.hatice.ikplus.mapper.ExpensesMapper;
 import org.hatice.ikplus.repository.expensesrepository.ExpensesRepository;
 import org.springframework.stereotype.Service;
 
+import javax.print.DocFlavor;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,5 +76,9 @@ public class ExpensesService {
 		Expenses updatedExpense = expensesRepository.save(expense);
 		
 		expensesMapper.toExpensesResponse(updatedExpense);
+	}
+	
+	public List<Expenses> findExpensesByCompanyId(Long companyId) {
+		return expensesRepository.findByCompanyId(companyId);
 	}
 }

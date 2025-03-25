@@ -5,6 +5,8 @@ import org.hatice.ikplus.dto.request.companyrequest.CompanyRequestDto;
 import org.hatice.ikplus.dto.response.companyresponse.CompanyResponse;
 import org.hatice.ikplus.entity.companymanagement.Company;
 import org.hatice.ikplus.enums.CompanyStatus;
+import org.hatice.ikplus.exception.ErrorType;
+import org.hatice.ikplus.exception.IKPlusException;
 import org.hatice.ikplus.mapper.CompanyMapper;
 import org.hatice.ikplus.repository.companyrepository.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -24,20 +26,20 @@ public class CompanyService {
 		companyRepository.save(company);
 	}
 
-	public CompanyResponse approveCompany(Long id) {
+	public void approveCompany(Long id) {
 		Company company = companyRepository.findById(id)
-		                                   .orElseThrow(() -> new RuntimeException("Company not found"));
-		company.setApproved(true);
+		                                   .orElseThrow(() -> new IKPlusException(ErrorType.COMPANY_NOT_FOUND));
+		
+		company.setStatus(CompanyStatus.APPROVED);
 		companyRepository.save(company);
-		return companyMapper.toDto(company);
 	}
 	
-	public CompanyResponse rejectCompany(Long id) {
+	public void rejectCompany(Long id) {
 		Company company = companyRepository.findById(id)
-		                                   .orElseThrow(() -> new RuntimeException("Company not found"));
-		company.setApproved(false);
+		                                   .orElseThrow(() -> new IKPlusException(ErrorType.COMPANY_NOT_FOUND));
+		
+		company.setStatus(CompanyStatus.REJECTED);
 		companyRepository.save(company);
-		return companyMapper.toDto(company);
 	}
 	
 	public CompanyResponse updateCompany(Long id, CompanyRequestDto updatedCompanyDTO) {
@@ -67,4 +69,7 @@ public class CompanyService {
 		                        .collect(Collectors.toList());
 	}
 	
+	public Company getCompanyByCompanyManagerId(Long companyManagerId) {
+		return companyRepository.findByCompanyManagerId(companyManagerId);
+	}
 }

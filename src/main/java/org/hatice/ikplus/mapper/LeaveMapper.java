@@ -1,6 +1,7 @@
 package org.hatice.ikplus.mapper;
 
 import org.hatice.ikplus.dto.request.leavesandassetrequest.AddLeaveRequestDto;
+import org.hatice.ikplus.dto.request.leavesandassetrequest.LeaveSaveRequestDto;
 import org.hatice.ikplus.dto.request.leavesandassetrequest.UpdateLeaveRequestDto;
 import org.hatice.ikplus.dto.response.leavesandassetsresponse.LeaveResponse;
 import org.hatice.ikplus.entity.leaveandassetmanagement.Leaves;
@@ -20,8 +21,17 @@ public interface LeaveMapper {
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	Leaves fromAddLeaveRequestDto(AddLeaveRequestDto dto);
 	
+	
+	
 	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
 	void updateLeaveFromDto(UpdateLeaveRequestDto dto, @MappingTarget Leaves entity);
 	
+	
 	LeaveResponse toLeaveResponse(Leaves leaves);
+	
+	
+	@Mapping(target = "status", constant = "APPROVED")
+	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+	Leaves fromLeaveSaveRequestDto(LeaveSaveRequestDto dto);
+	
 }

@@ -20,7 +20,7 @@ public class Shift {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long companyId;
+	private Long companyManagerId;
 	private Long employeeId;
 	
 	@Enumerated(EnumType.STRING)

@@ -20,6 +20,7 @@ public class Break {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long shiftId;
+	private Long employeeId;
 	
 	@Enumerated(EnumType.STRING)
 	private BreakName breakName;

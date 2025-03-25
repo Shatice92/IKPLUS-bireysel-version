@@ -29,7 +29,11 @@ public enum ErrorType {
 	AUTHORIZATION_NOT_FOUND(7001, "Authorization not found", HttpStatus.NOT_FOUND),
 	EMAIL_ALREADY_EXISTS(1006, "Email already exists", HttpStatus.BAD_REQUEST),
 	COMPANY_MANAGER_NOT_FOUND(8001, "Company Manager not found", HttpStatus.NOT_FOUND),
-	NOTIFICATION_NOT_FOUND(9001, "Notifications not found", HttpStatus.NOT_FOUND);
+	NOTIFICATION_NOT_FOUND(9001, "Notifications not found", HttpStatus.NOT_FOUND),
+	SHIFT_NOT_FOUND(10001, "Shift not found", HttpStatus.NOT_FOUND),
+	BREAK_NOT_FOUND(11001, "Break not found", HttpStatus.NOT_FOUND),
+	INVALID_LEAVE_TYPE(6005, "Invalid leave type", HttpStatus.NOT_ACCEPTABLE ),
+	COMPANY_NOT_FOUND(8002, "Company NOT found", HttpStatus.NOT_FOUND);
 	
 	
 	int code;

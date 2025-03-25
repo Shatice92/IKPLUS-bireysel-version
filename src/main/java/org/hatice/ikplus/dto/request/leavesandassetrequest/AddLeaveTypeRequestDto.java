@@ -9,5 +9,5 @@ import org.hatice.ikplus.enums.leaveandassetenums.TypeLeaves;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddLeaveTypeRequestDto {
-	private TypeLeaves leavesName;
+	private String leavesName; // String olarak değiştiriyoruz
 }

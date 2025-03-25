@@ -1,11 +1,8 @@
 package org.hatice.ikplus.dto.request.companyrequest;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record CompanyRequestDto(
-		@NotNull String name,
-		@NotNull
-		String emailDomain,
-		@NotNull String logo,
-		@NotNull Long companyManagerId) {
+public record CompanyRequestDto(@NotBlank String name, @NotBlank String emailDomain, @NotBlank String logo,
+                                @NotNull Long companyManagerId) {
 }

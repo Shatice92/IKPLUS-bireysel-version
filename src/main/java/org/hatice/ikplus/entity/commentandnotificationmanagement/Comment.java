@@ -21,7 +21,7 @@ public class Comment {
 	private Long id;
 	private String userImageUrl;
 	private Long companyId;
-	private Long userId;
+	private Long companyManagerId;
 	private String comment;
 	private Double rating;
 	private LocalDateTime createdAt;

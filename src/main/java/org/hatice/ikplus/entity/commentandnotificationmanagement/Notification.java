@@ -19,7 +19,7 @@ public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long employeeId;
+	private Long userId;
 	private String title;
 	private String notification;
 	private LocalDateTime createdAt;

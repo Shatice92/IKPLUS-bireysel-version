@@ -9,6 +9,7 @@ import org.hatice.ikplus.enums.SubscriptionName;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -23,6 +24,6 @@ public class Subscription {
 	@Enumerated(EnumType.STRING)
 	private SubscriptionName name;
 	private BigDecimal price;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 }

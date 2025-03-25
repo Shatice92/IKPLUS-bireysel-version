@@ -12,4 +12,7 @@ import java.util.List;
 public interface ExpensesRepository extends JpaRepository<Expenses,Long> {
 	List<Expenses> findByEmployeeId(Long employeeId);
 	List<Expenses> findByStatus(ExpensesType status);
+	
+	
+	List<Expenses> findByCompanyId(Long companyId);
 }

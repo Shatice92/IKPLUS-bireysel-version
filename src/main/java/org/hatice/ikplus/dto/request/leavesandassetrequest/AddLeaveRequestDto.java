@@ -6,15 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddLeaveRequestDto {
-	private Long employeeId;        // Çalışanın ID'si
-	private Long leaveTypeId;       // İzin tipi ID'si
-	private LocalDate startDate;    // Başlangıç tarihi
-	private LocalDate endDate;      // Bitiş tarihi
-	private Long approvedByUserId;  // Onaylayan kullanıcı ID'si
+	private Long employeeId;
+	private Long leaveTypeId;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private LocalDateTime createdAt;
 }

@@ -15,6 +15,7 @@ public interface CommentMapper {
 	
 	CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
 	
-	
+	@Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+	@Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
 	Comment fromSaveCommentRequestDto(SaveCommentRequestDto dto);
 }

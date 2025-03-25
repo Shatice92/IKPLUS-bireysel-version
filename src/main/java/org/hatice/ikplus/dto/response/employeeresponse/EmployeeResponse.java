@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 public record EmployeeResponse(
 		Long id,
-		Long userId,
-		Long companyId,
 		String position,
 		EmployeeType status,
-		LocalDateTime updatedAt
+		LocalDateTime hireDate,
+		String firstName,
+		String lastName
 ) {
 }

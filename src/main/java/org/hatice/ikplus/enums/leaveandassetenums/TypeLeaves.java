@@ -26,7 +26,7 @@ public enum TypeLeaves {
 	ADOPTION_LEAVE("Evlat edinen ebeveynler için verilen izin."),
 	SPECIAL_OCCASION_LEAVE("Çalışanın özel günleri mezuniyet, çocuğun ilk günü  gibi için verilen izin."),
 	QUARANTINE_LEAVE("Bulaşıcı hastalık durumlarında verilen izin."),
-	WORK_FROM_HOME("Fiziksel olarak ofiste olmadan " + "kullanılan izin.");
+	WORK_FROM_HOME("Fiziksel olarak ofiste olmadan kullanılan izin.");
 	
 	private final String description;
 	

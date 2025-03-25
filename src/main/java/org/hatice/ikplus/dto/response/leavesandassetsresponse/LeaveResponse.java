@@ -19,8 +19,5 @@ public class LeaveResponse {
 	private Long leaveTypeId;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private Long approvedByUserId;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
 	private LeaveStatus status;
 }
